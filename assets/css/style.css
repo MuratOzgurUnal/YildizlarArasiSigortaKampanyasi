@@ -158,3 +158,93 @@ nav a#what-is-it-button::after { display: none; }
 .modal-content h2, .modal-content h3 { color: var(--accent-color); margin-top: 1.5rem; margin-bottom: 0.75rem; }
 .modal-content p, .modal-content li { font-family: var(--font-family-body); line-height: 1.8; margin-bottom: 1rem; }
 .modal-content ul { padding-left: 20px; }
+
+/* =================================================================
+   ==== SON DERECE MOBİL UYUMLULUK GÜNCELLEMELERİ ====
+   ================================================================= */
+   @media (max-width: 768px) {
+
+    /* --- Genel Düzenlemeler --- */
+    body {
+        /* Yazıların daha okunaklı olması için boyutu hafifçe ayarlayalım */
+        font-size: 16px;
+    }
+
+    .container {
+        /* Kenar boşluklarını azaltarak içeriğe daha fazla yer açalım */
+        padding: 1rem 15px;
+    }
+
+    /* --- Header ve Navigasyon --- */
+    .site-header {
+        /* Başlık ve menüyü alt alta dizelim */
+        flex-direction: column;
+        padding: 1rem;
+        /* Başlık ve menü arasına boşluk koyalım */
+        gap: 1rem;
+    }
+    
+    .main-title {
+        /* Ana başlığı mobil için küçültelim */
+        font-size: 1.6rem;
+        letter-spacing: 3px;
+        text-align: center;
+    }
+
+    nav {
+        /* EN ÖNEMLİ KISIM: Menü linklerini alt alta dizelim */
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+        align-items: center; /* Linkleri ortalayalım */
+    }
+
+    nav a {
+        /* Her bir linkin tıklama alanını rahatlatalım */
+        padding: 0.5rem;
+        font-size: 1rem;
+        text-align: center;
+    }
+    
+    /* İhtimalsizlik motoru butonunu diğer linklerle uyumlu hale getirelim */
+    #what-is-it-button {
+        padding: 0.6rem 1rem;
+        line-height: 1.4;
+    }
+
+    /* --- Ana Sayfa Düzeni --- */
+    .main-layout {
+        /* Zaten 1200px'de yapılıyor ama burada da garantileyelim */
+        flex-direction: column;
+    }
+
+    /* --- Fikstür Sayfası --- */
+    .match-row {
+        /* Takım ve skoru daha okunaklı bir şekilde alt alta dizelim */
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1rem;
+        align-items: center; /* Tüm içeriği ortalayalım */
+    }
+
+    .match-row .team {
+        font-size: 1.1rem;
+        justify-content: center; /* Logoyu ve ismi ortala */
+    }
+
+    .score-info-fixture {
+        width: 100%;
+        text-align: center;
+    }
+    
+    /* Mobil için "vs" işaretini gizleyip yerine skoru koyalım */
+    .vs-separator-fixture {
+        margin: 0 0.75rem;
+    }
+
+    .match-row .team.away {
+       /* Mobil için ters hizalama gereksiz */
+       flex-direction: row;
+    }
+}
