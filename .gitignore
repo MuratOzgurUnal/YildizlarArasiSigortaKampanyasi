@@ -1,7 +1,13 @@
-# API anahtarlarını içeren dosyayı GitHub'a gönderme
-assets/js/config.js
+# API anahtarlarını ve lokal ortam değişkenlerini içeren dosyaları görmezden gel
+.env
+.env.development.local
+.env.local
 
 # İşletim sistemi ve düzenleyici tarafından oluşturulan gereksiz dosyalar
 .DS_Store
 node_modules
 .vscode/
+.vercel
+
+# Artık kullanılmayan eski config dosyası (tedbiren kalsın)
+assets/js/config.js
