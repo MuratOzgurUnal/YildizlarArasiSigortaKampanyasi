@@ -131,7 +131,7 @@ if (improbabilityButton) {
         }
 
         const responseArea = document.getElementById('improbability-response');
-        responseArea.innerHTML = '<div class="loader"></div><p>İhtimaller hesaplanıyor, kuantum köpükler karıştırılıyor...</p>';
+        responseArea.innerHTML = '<div class="loader"></div><p>İhtimaller hesaplanıyor...</p>';
         improbabilityButton.disabled = true;
         
         // --- PROMPT GÜNCELLENDİ (Antalya Temalı, Daha Eğlenceli ve Basit Dil) ---
