@@ -62,7 +62,7 @@ export async function fetchGeminiData(prompt) {
     const keys = await getApiKeys();
     if (!keys) throw new Error("API anahtarları eksik.");
     
-    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${keys.geminiApiKey}`;
+    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=${keys.geminiApiKey}`;
 
     try {
         const response = await fetch(GEMINI_API_URL, {
