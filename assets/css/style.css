@@ -165,34 +165,58 @@ nav a#what-is-it-button::after { display: none; }
 
     /* --- MOBİL HEADER: YENİ VE KOMPAKT TASARIM --- */
     .site-header {
-        /* YAPIŞKAN ÖZELLİĞİNİ KALDIRARAK EKRANI KAPLAMA SORUNUNU ÇÖZÜYORUZ */
         position: static;
         flex-direction: column;
-        padding: 0.75rem 1rem; /* Dikey boşluğu azalttık */
-        gap: 0.75rem; /* Başlık ve menü arasını azalttık */
+        padding: 0.75rem 1rem;
+        gap: 0.75rem;
     }
     .main-title {
-        font-size: 1.3rem; /* Başlık fontunu küçülttük */
+        font-size: 1.3rem;
         letter-spacing: 2px;
         margin-bottom: 0;
     }
     nav {
-        /* Menüyü yan yana dizip sığmazsa aşağı kaymasını sağlıyoruz */
         flex-direction: row;
-        flex-wrap: wrap; /* Bu en önemli kural! */
+        flex-wrap: wrap;
         justify-content: center;
-        /* Dikey ve yatay boşlukları ayrı ayrı ayarlıyoruz */
         gap: 0.5rem 1.25rem; 
     }
     nav a {
-        font-size: 0.8rem; /* Menü yazılarını küçülttük */
+        font-size: 0.8rem;
         letter-spacing: 1px;
-        padding: 0.2rem 0; /* İç boşluğu azalttık */
+        padding: 0.2rem 0;
     }
     #what-is-it-button {
-        /* Butonu diğer linklerle uyumlu hale getiriyoruz */
         font-size: 0.7rem;
         padding: 0.4rem 0.8rem;
+    }
+
+    /* --- MOBİL PUAN DURUMU TABLOSU DÜZENLEMESİ (YENİ) --- */
+    table {
+        /* Yazıları küçülterek sığmasını sağlıyoruz */
+        font-size: 0.8rem; 
+    }
+    th, td {
+        /* Hücre içi boşlukları azaltarak yerden kazanıyoruz */
+        padding: 0.5rem 0.25rem;
+    }
+    /* # ve Şube hariç diğer tüm sütunları ortalıyoruz */
+    th:nth-child(n+3),
+    td:nth-child(n+3) {
+        text-align: center;
+    }
+
+    /* --- MOBİL FİKSTÜR ARAMA KUTUSU DÜZENLEMESİ (YENİ) --- */
+    .fixtures-header {
+        /* Başlık ve arama kutusunu alt alta diziyoruz */
+        flex-direction: column;
+        align-items: flex-start; /* Sola hizalıyoruz */
+        gap: 1rem;
+    }
+    #fixture-search {
+        /* Arama kutusunun genişliğini %100 yapıyoruz */
+        width: 100%;
+        min-width: 0; /* Masaüstünden gelen min-width'i sıfırlıyoruz */
     }
 
     /* --- Diğer Mobil Düzenlemeler --- */
