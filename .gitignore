@@ -1,0 +1,7 @@
+# API anahtarlarını içeren dosyayı GitHub'a gönderme
+assets/js/config.js
+
+# İşletim sistemi ve düzenleyici tarafından oluşturulan gereksiz dosyalar
+.DS_Store
+node_modules
+.vscode/
