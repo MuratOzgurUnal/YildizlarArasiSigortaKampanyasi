@@ -1,3 +1,6 @@
+// GÜNCELLEME: Fonksiyonlar api.js dosyasından içe aktarılıyor.
+import { fetchGoogleSheetData, fetchGeminiData } from './api.js';
+
 // =================================================================
 // YARDIMCI FONKSİYONLARI
 // =================================================================

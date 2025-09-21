@@ -20,7 +20,7 @@ const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/
  * @param {string} sheetName - Veri çekilecek sayfanın adı (Örn: 'PuanDurumu!A2:F').
  * @returns {Promise<Array<Object>>} - İşlenmiş veri dizisi.
  */
-async function fetchGoogleSheetData(sheetName) {
+export async function fetchGoogleSheetData(sheetName) {
     const url = `${GOOGLE_SHEETS_BASE_URL}${sheetName}?key=${GOOGLE_API_KEY}`;
     try {
         const response = await fetch(url);
@@ -53,7 +53,7 @@ async function fetchGoogleSheetData(sheetName) {
  * @param {string} prompt - Gemini'ye gönderilecek metin istemi.
  * @returns {Promise<string>} - Üretilen metin.
  */
-async function fetchGeminiData(prompt) {
+export async function fetchGeminiData(prompt) {
     try {
         const response = await fetch(GEMINI_API_URL, {
             method: 'POST',
