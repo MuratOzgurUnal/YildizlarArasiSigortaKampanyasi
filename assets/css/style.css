@@ -50,6 +50,9 @@ th { color: var(--accent-color); border-bottom: 2px solid var(--accent-color); f
 tbody tr { border-bottom: 1px solid rgba(0, 229, 255, 0.2); }
 .branch-cell { display: flex; align-items: center; gap: 10px; font-weight: 700; }
 .branch-logo { width: 24px; height: 24px; margin-right: 10px; vertical-align: middle; border-radius: 50%; object-fit: cover; background: rgba(255,255,255,0.1); }
+tbody tr.clickable-row { cursor: pointer; transition: background-color 0.3s; }
+tbody tr.clickable-row:hover { background-color: rgba(0, 229, 255, 0.1); }
+
 
 /* --- KLASMANLAR SAYFASI --- */
 .branch-groups-layout { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
@@ -141,6 +144,196 @@ nav a#what-is-it-button::after { display: none; }
 .modal-content h2, .modal-content h3 { color: var(--accent-color); margin-top: 1.5rem; margin-bottom: 0.75rem; }
 .modal-content p, .modal-content li { font-family: var(--font-family-body); line-height: 1.8; margin-bottom: 1rem; }
 .modal-content ul { padding-left: 20px; }
+
+/* =================================================================
+   ==== YENİ: ŞUBE PROFİL KARTI MODAL STİLLERİ (TAMAMEN GÜNCELLENDİ) ====
+   ================================================================= */
+.profile-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 15, 26, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    animation: fadeIn 0.4s ease forwards;
+}
+@keyframes fadeIn { to { opacity: 1; } }
+
+.profile-modal-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    border-radius: var(--border-radius);
+    width: 90%;
+    max-width: 800px; /* Genişletildi */
+    max-height: 90vh;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    transform: scale(0.95);
+    animation: scaleUp 0.4s ease forwards;
+}
+@keyframes scaleUp { to { transform: scale(1); } }
+
+.profile-modal-header {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+    position: relative;
+}
+
+.profile-modal-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1.5rem;
+    border: 2px solid var(--accent-color);
+}
+
+.profile-modal-title {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 0 10px var(--glow-color);
+}
+
+.profile-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+    line-height: 1;
+}
+.profile-modal-close:hover {
+    color: var(--accent-color);
+    transform: rotate(90deg);
+}
+
+.profile-modal-body {
+    padding: 1.5rem;
+    overflow-y: auto;
+    font-family: var(--font-family-body);
+}
+
+.profile-section-title {
+    font-family: var(--font-family);
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 1.5rem; /* Üst boşluk eklendi */
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 229, 255, 0.3);
+    padding-bottom: 0.5rem;
+}
+.profile-stats-container + .profile-section-title {
+    margin-top: 2rem; /* İstatistik ve maç listesi arasına boşluk */
+}
+.profile-modal-body .profile-section-title:first-child {
+    margin-top: 0; /* İlk başlığın üst boşluğunu kaldır */
+}
+
+
+/* -- Yeni İstatistik ve Grafik Alanı -- */
+.profile-stats-container {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+.chart-and-legend {
+    flex: 1;
+    min-width: 200px;
+}
+.chart-wrapper {
+    position: relative;
+    max-width: 220px;
+    margin: 0 auto 1.5rem auto; /* Ortala ve alt boşluk */
+}
+
+.performance-legend {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 200px; /* Genişliği ayarla */
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.legend-color-box {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.stats-grid-new {
+    flex: 1.5;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    align-content: start; /* Kartları yukarı hizala */
+}
+
+.stat-card-new {
+    background: rgba(13, 16, 27, 0.7);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    border: 1px solid transparent;
+    transition: border-color 0.3s, transform 0.3s;
+}
+
+.stat-card-new:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent-color);
+}
+
+.stat-card-new-value {
+    font-family: var(--font-family);
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    line-height: 1.1;
+}
+
+.stat-card-new-label {
+    font-size: 0.8rem;
+    color: var(--text-color);
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* -- Oynanan Maçlar Listesi -- */
+.matches-list .match-row-wrapper {
+    margin-bottom: 1rem;
+}
+.matches-list .match-week-info {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    margin-bottom: 0.25rem;
+    padding-left: 0.5rem;
+}
+.matches-list .match-row {
+    margin-bottom: 0;
+}
+
 
 /* =================================================================
    ==== MOBİL UYUMLULUK BÖLÜMÜ ====
@@ -243,5 +436,41 @@ nav a#what-is-it-button::after { display: none; }
     }
     .match-row .team.away {
        flex-direction: row;
+    }
+
+    /* --- MOBİL PROFİL KARTI --- */
+    .profile-modal-card {
+        width: 95%;
+        max-height: 95vh;
+    }
+    .profile-modal-header {
+        padding: 1rem;
+        flex-direction: column;
+        text-align: center;
+    }
+    .profile-modal-logo {
+        width: 60px;
+        height: 60px;
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+    }
+    .profile-modal-title {
+        font-size: 1.5rem;
+    }
+    .profile-modal-body {
+        padding: 1rem;
+    }
+    .profile-stats-container {
+        flex-direction: column; /* Mobil'de alt alta diz */
+        gap: 1.5rem;
+    }
+    .stats-grid-new {
+        width: 100%;
+    }
+    .stat-card-new-value {
+        font-size: 1.8rem;
+    }
+    .stat-card-new-label {
+        font-size: 0.7rem;
     }
 }
