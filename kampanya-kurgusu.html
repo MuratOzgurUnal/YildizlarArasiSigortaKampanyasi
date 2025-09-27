@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yıldızlar Arası Sigorta Kampanyası - Kampanya Kurgusu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <img src="./assets/images/astronot1.svg" class="header-astro astro-left" alt="Astronot 1">
+        <div class="header-center">
+            <h1 class="main-title">Yıldızlar Arası Sigorta Kampanyası</h1>
+            <nav>
+                <a href="./index.html">Ana Sayfa</a>
+                <a href="./sube-klasmanlari.html">Klasmanlar</a>
+                <a href="./fikstur.html">Fikstür</a>
+                <a href="./kampanya-kurgusu.html" class="active">Kampanya Kurgusu</a>
+                <a href="#" id="what-is-it-button">NEDİR BU <br> İHTİMALSİZLİK MOTORU?</a>
+            </nav>
+        </div>
+        <img src="./assets/images/astronot2.svg" class="header-astro astro-right" alt="Astronot 2">
+    </header>
+    <main class="container">
+        <!-- YENİ: Sayfaya özel stil uygulamak için ID eklendi -->
+        <section class="card" id="campaign-rules-card">
+            <h2 class="card-title" style="text-align: center; font-size: 1.5rem; letter-spacing: 3px;">ŞUBELER ARASI BÜYÜK SİGORTA LİGİ BAŞLIYOR!</h2>
+            <p style="text-align: center; font-family: var(--font-family-body); line-height: 1.8;">Bölgemizin başarılı şubeleri, 12 hafta sürecek heyecan dolu bir performans yarışması için bir araya geliyor. Bu rekabette hedef odaklılık, strateji ve takım ruhu ön planda olacak. Yolun sonunda ise en iyi performansı gösteren ekiplerimiz birbirinden güzel ödüllerin sahibi olacak!</p>
+            <p class="campaign-slogan">Heyecan Dolu Maraton Başlıyor!</p>
+
+            <!-- YENİ: Başlığa emoji eklendi -->
+            <h3 class="profile-section-title">🚀 YARIŞMA FORMATI: ZİRVEYE UZANAN 12 HAFTALIK YOLCULUK</h3>
+            <p>42 şubemiz, lig usulü puan sistemine dayalı bu yarışmada 12 hafta boyunca performanslarını sergileyecek. Her hafta fikstürde belirlenen rakibinizle hedeflerinize ulaşmak için yarışacaksınız.</p>
+            <ul>
+                <li><strong>Adil Rekabet Ortamı:</strong> Dengeli bir yarışma ortamı sağlamak amacıyla şubelerimiz kendi klasmanlarında mücadele edecek. Şubenizin hangi klasmanda yer aldığını <a href="./sube-klasmanlari.html">"Klasmanlar"</a> bölümünden görebilirsiniz.</li>
+                <li><strong>Yarışma Takvimi:</strong> 12 haftalık yarışma takviminin tamamına ve haftalık rakiplerinize <a href="./fikstur.html">"Fikstür"</a> sayfasından ulaşabilirsiniz. Stratejinizi şimdiden hazırlayın!</li>
+            </ul>
+
+            <!-- YENİ: Başlığa emoji eklendi -->
+            <h3 class="profile-section-title">🎯 PERFORMANS VE PUANLAMA: BAŞARI NASIL PUANLANACAK?</h3>
+            <p>Haftalık başarınız, 5 ana sigorta branşındaki hedeflerinize göre ölçülecektir. Haftalık hedefleriniz, aylık MIS hedeflerinizin dörde bölünmesiyle kolayca hesaplanabilir.</p>
+            <p><strong>İşte Puanlamanın Detayları:</strong></p>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sigorta Branşı</th>
+                            <th>Puan Ağırlığı</th>
+                            <th>Açıklama</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr> <td>Sağlık</td> <td style="text-align: center;">%20</td> <td>Haftalık hedefinize %100 ulaştığınızda 20 puan kazanırsınız. Hedefinizi aşmanız durumunda puanınız da artacaktır (Örn: %110 başarı = 22 Puan).</td> </tr>
+                        <tr> <td>Elementer</td> <td style="text-align: center;">%20</td> <td>Elementer sigortalarda %100 başarı 20 puandır.</td> </tr>
+                        <tr> <td>Hayat</td> <td style="text-align: center;">%10</td> <td>Hayat sigortası hedefinize ulaşarak 10 puan kazanabilirsiniz.</td> </tr>
+                        <tr> <td>BES Hacim</td> <td style="text-align: center;">%20</td> <td>BES Hacim'de %100 başarıya ulaşarak 20 puan alabilirsiniz.</td> </tr>
+                        <tr> <td>BES Adet</td> <td style="text-align: center;">%30</td> <td>En yüksek puan ağırlığına sahip olan BES Adet hedefinde %100 başarı 30 puan değerindedir.</td> </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- YENİ: Önemli puan vurgulandı -->
+            <p class="bonus-point">🏆 <strong>Ekip Bonusu:</strong> Şubenizin Bireysel Bankacılık ekibi, kendi BES Adet hedefini %100 tutturursa, o hafta şubenizin genel skoruna <span class="highlight-accent">ekstra %10 puan</span> daha kazandırır!</p>
+
+            <!-- YENİ: Başlığa emoji eklendi -->
+            <h3 class="profile-section-title">⚖️ KRİTİK KURAL: %60 BAŞARI BARAJI</h3>
+            <!-- YENİ: Önemli kural dikkat çekici kutu içine alındı -->
+            <div class="important-note">
+                <p><strong>ÖNEMLİ:</strong> Haftalık karşılaşmalardan puan alabilmenin temel bir koşulu vardır. Puan kazanabilmek için yukarıda belirtilen <strong>5 branşın her birinde</strong> haftalık hedeflerinize göre <span class="highlight-accent">en az %60'lık bir gerçekleşme</span> sağlamanız gerekmektedir.</p>
+            </div>
+            <strong>Puanlama Nasıl İşleyecek?</strong>
+            <ul>
+                <li><strong>Galibiyet (3 Puan):</strong> Eğer 5 branşın tümünde %60 barajını aştıysanız ve toplam puanınız rakibinizden fazlaysa, haftayı <span class="highlight-accent">3 puanla</span> kapatırsınız.</li>
+                <li><strong>Beraberlik (1 Puan):</strong> Her iki şube de %60 barajını aştıysa ve puanlar eşitse, iki takım da haftayı <span class="highlight-accent">1'er puanla</span> tamamlar.</li>
+                <li><strong>Puan Alamama Durumu:</strong> Herhangi bir branşta %60'ın altında kalırsanız, o hafta toplam puanınız rakibinizden yüksek olsa bile puan kazanamazsınız. Eğer iki rakip şube de bu barajın altında kalırsa, o hafta her iki takım da <span class="highlight-danger">0 puan</span> alır.</li>
+            </ul>
+
+            <!-- YENİ: Başlığa emoji eklendi -->
+            <h3 class="profile-section-title">🏆 ZAFERİN GÖRKEMİ: ŞAMPİYONLARI NELER BEKLİYOR?</h3>
+            <p>12 haftalık bu büyük mücadelenin sonunda, zirveye adını yazdıranları efsanevi ödüller bekliyor! Gösterdiğiniz her çabanın, döktüğünüz her terin ve kurduğunuz her stratejinin karşılığını fazlasıyla alacaksınız.</p>
+            <ul>
+                <li><strong>ŞAMPİYONLAR PODYUMU:</strong> Ligi <span class="highlight-accent">ilk 5'te</span> tamamlayan şampiyon ekipler, zaferlerini hep birlikte kutlayacakları, tüm yılın yorgunluğunu unutturacak <strong>sürprizlerle dolu, unutulmaz bir eğlence deneyimi</strong> yaşayacak! Bu kutlama, uzun süre konuşulacak!</li>
+                <li><strong>LİGİN YILDIZLARI:</strong> Bu sahnede bireysel performanslar da karşılıksız kalmayacak! Şubelerinde fark yaratan, hedefleri alt üst eden en başarılı portföy yöneticilerimiz, performanslarını taçlandıracak <strong>göz alıcı teknoloji ödülleri ve prestijli hediye çekleri</strong> ile onurlandırılacak!</li>
+            </ul>
+            <p class="final-motto">Unutmayın, bu ligde her an, her hedef ve her puan sizi zafere ve bu muhteşem ödüllere bir adım daha yaklaştırıyor!</p>
+        </section>
+    </main>
+
+    <div id="improbability-modal" class="modal-container">
+        <div class="modal-content">
+            <span class="modal-close-button">&times;</span>
+            <div id="modal-body-content"></div>
+        </div>
+    </div>
+
+    <script src="./assets/js/api.js" type="module"></script>
+    <script src="./assets/js/main.js" type="module"></script>
+</body>
+</html>

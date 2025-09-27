@@ -8,13 +8,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/style.css">
-    <!-- YENİ ve GEREKLİ: Pasta grafiği için Chart.js kütüphanesi eklendi -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <video autoplay loop muted playsinline class="background-video">
-        <source src="./assets/videos/Yildizlararasi.mp4" type="video/mp4">
-    </video>
+    <!-- Video kaldırıldı, arka plan CSS'ten geliyor -->
 
     <header class="site-header">
         <img src="./assets/images/astronot1.svg" class="header-astro astro-left" alt="Astronot 1">
@@ -24,6 +21,7 @@
                 <a href="./index.html" class="active">Ana Sayfa</a>
                 <a href="./sube-klasmanlari.html">Klasmanlar</a>
                 <a href="./fikstur.html">Fikstür</a>
+                <a href="./kampanya-kurgusu.html">Kampanya Kurgusu</a>
                 <a href="#" id="what-is-it-button">NEDİR BU <br> İHTİMALSİZLİK MOTORU?</a>
             </nav>
         </div>
@@ -34,7 +32,6 @@
         <section class="main-layout">
             <div class="sidebar-wrapper">
                 <div class="card sidebar-content" id="improbability-drive-container">
-                    <!-- BAŞLIK METNİ İSTEDİĞİNİZ GİBİ GÜNCELLENDİ -->
                     <h2 class="card-title">SONSUZ İHTİMALSİZLİK MOTORU</h2>
                     <button id="improbability-button">MOTORU ÇALIŞTIR</button>
                     <div id="improbability-response" class="improbability-message-area">
@@ -43,7 +40,7 @@
                     <p class="improbability-note">Dikkat! Sonuçlar tamamen anlamsız, bir o kadar da gerçek olabilir.</p>
                 </div>
                 <div class="card sidebar-content" id="weekly-news-card">
-                    <h2 class="card-title">BU HAFTA ÖNE ÇIKAN HABERLER</h2>
+                    <h2 class="card-title">ÖNE ÇIKAN HABERLER</h2>
                     <div id="news-content-area">
                         <!-- Haber içeriği main.js tarafından buraya yüklenecek -->
                     </div>

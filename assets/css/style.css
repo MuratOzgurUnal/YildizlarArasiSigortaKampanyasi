@@ -15,15 +15,36 @@
     --header-bg: rgba(13, 16, 27, 0.4); 
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: var(--font-family); background-color: var(--dark-bg); color: var(--text-color); overflow-x: hidden; line-height: 1.5; }
+body { 
+    font-family: var(--font-family); 
+    background-color: var(--dark-bg); 
+    color: var(--text-color); 
+    overflow-x: hidden; 
+    line-height: 1.5; 
+}
 .container { max-width: 1600px; margin: 0 auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 .card { padding: 1.5rem; border-radius: var(--border-radius); border: 1px solid rgba(0, 229, 255, 0.3); backdrop-filter: blur(10px); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); animation: fadeInUp 0.5s ease-out forwards; opacity: 0; background: var(--card-bg); }
 .card-title { margin-bottom: 1rem; font-size: 1.1rem; color: var(--accent-color); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
 
-/* --- VİDEO ARKA PLANI --- */
-.background-video { position: fixed; top: 50%; left: 50%; min-width: 100%; min-height: 100%; width: auto; height: auto; transform: translateX(-50%) translateY(-50%); z-index: -2; object-fit: cover; }
-body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(10, 15, 26, 0.8), rgba(10, 15, 26, 0.95)); z-index: -1; }
+/* --- DÜZELTME: VİDEO ARKA PLANI YERİNE GÖRSEL --- */
+.background-video { 
+    display: none; 
+}
+body {
+    background: url('../images/Yildizlararasi.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+body::before { 
+    content: ''; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: linear-gradient(to bottom, rgba(10, 15, 26, 0.8), rgba(10, 15, 26, 0.95)); 
+    z-index: -1; 
+}
 
 /* --- PROFESYONEL HEADER --- */
 .site-header { width: 100%; padding: 1rem 2rem; position: sticky; top: 0; z-index: 10; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0, 229, 255, 0.2); background: var(--header-bg); }
@@ -52,7 +73,6 @@ tbody tr { border-bottom: 1px solid rgba(0, 229, 255, 0.2); }
 .branch-logo { width: 24px; height: 24px; margin-right: 10px; vertical-align: middle; border-radius: 50%; object-fit: cover; background: rgba(255,255,255,0.1); }
 tbody tr.clickable-row { cursor: pointer; transition: background-color 0.3s; }
 tbody tr.clickable-row:hover { background-color: rgba(0, 229, 255, 0.1); }
-
 
 /* --- KLASMANLAR SAYFASI --- */
 .branch-groups-layout { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
@@ -126,7 +146,13 @@ tbody tr.clickable-row:hover { background-color: rgba(0, 229, 255, 0.1); }
 .improbability-message-area { flex-grow: 0; min-height: 80px; }
 #news-content-area img { width: 100%; border-radius: 8px; margin-bottom: 1rem; object-fit: cover; }
 #news-content-area h3 { color: var(--accent-color); margin-bottom: 0.5rem; }
-#news-content-area p { font-size: 0.9rem; opacity: 0.9; margin-bottom: 0.75rem; }
+#news-content-area p { 
+    font-size: 0.9rem; 
+    opacity: 0.9; 
+    margin-bottom: 0.75rem; 
+    font-family: var(--font-family-body);
+    line-height: 1.6;
+}
 #improbability-drive-container { flex: 1 1 35%; display: flex; flex-direction: column; }
 #weekly-news-card { flex: 2 1 65%; display: flex; flex-direction: column; }
 #news-content-area { flex-grow: 1; }
@@ -146,7 +172,7 @@ nav a#what-is-it-button::after { display: none; }
 .modal-content ul { padding-left: 20px; }
 
 /* =================================================================
-   ==== YENİ: ŞUBE PROFİL KARTI MODAL STİLLERİ (TAMAMEN GÜNCELLENDİ) ====
+   ==== ŞUBE PROFİL KARTI MODAL STİLLERİ ====
    ================================================================= */
 .profile-modal-overlay {
     position: fixed;
@@ -170,7 +196,7 @@ nav a#what-is-it-button::after { display: none; }
     border: 1px solid rgba(0, 229, 255, 0.3);
     border-radius: var(--border-radius);
     width: 90%;
-    max-width: 800px; /* Genişletildi */
+    max-width: 800px;
     max-height: 90vh;
     box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
     display: flex;
@@ -232,20 +258,18 @@ nav a#what-is-it-button::after { display: none; }
     font-size: 1.2rem;
     text-transform: uppercase;
     letter-spacing: 2px;
-    margin-top: 1.5rem; /* Üst boşluk eklendi */
+    margin-top: 1.5rem;
     margin-bottom: 1rem;
     border-bottom: 1px solid rgba(0, 229, 255, 0.3);
     padding-bottom: 0.5rem;
 }
 .profile-stats-container + .profile-section-title {
-    margin-top: 2rem; /* İstatistik ve maç listesi arasına boşluk */
+    margin-top: 2rem;
 }
 .profile-modal-body .profile-section-title:first-child {
-    margin-top: 0; /* İlk başlığın üst boşluğunu kaldır */
+    margin-top: 0;
 }
 
-
-/* -- Yeni İstatistik ve Grafik Alanı -- */
 .profile-stats-container {
     display: flex;
     gap: 2rem;
@@ -258,14 +282,14 @@ nav a#what-is-it-button::after { display: none; }
 .chart-wrapper {
     position: relative;
     max-width: 220px;
-    margin: 0 auto 1.5rem auto; /* Ortala ve alt boşluk */
+    margin: 0 auto 1.5rem auto;
 }
 
 .performance-legend {
     list-style: none;
     padding: 0;
     margin: 0 auto;
-    max-width: 200px; /* Genişliği ayarla */
+    max-width: 200px;
 }
 
 .legend-item {
@@ -287,7 +311,7 @@ nav a#what-is-it-button::after { display: none; }
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
-    align-content: start; /* Kartları yukarı hizala */
+    align-content: start;
 }
 
 .stat-card-new {
@@ -320,7 +344,6 @@ nav a#what-is-it-button::after { display: none; }
     letter-spacing: 1px;
 }
 
-/* -- Oynanan Maçlar Listesi -- */
 .matches-list .match-row-wrapper {
     margin-bottom: 1rem;
 }
@@ -350,13 +373,11 @@ nav a#what-is-it-button::after { display: none; }
     } 
 }
 
-/* --- TELEFON VE KÜÇÜK TABLETLER İÇİN --- */
 @media (max-width: 768px) {
     .container {
         padding: 1rem 15px;
     }
 
-    /* --- MOBİL HEADER: YENİ VE KOMPAKT TASARIM --- */
     .site-header {
         position: static;
         flex-direction: column;
@@ -384,35 +405,27 @@ nav a#what-is-it-button::after { display: none; }
         padding: 0.4rem 0.8rem;
     }
 
-    /* --- MOBİL PUAN DURUMU TABLOSU DÜZENLEMESİ (YENİ) --- */
     table {
-        /* Yazıları küçülterek sığmasını sağlıyoruz */
         font-size: 0.8rem; 
     }
     th, td {
-        /* Hücre içi boşlukları azaltarak yerden kazanıyoruz */
         padding: 0.5rem 0.25rem;
     }
-    /* # ve Şube hariç diğer tüm sütunları ortalıyoruz */
     th:nth-child(n+3),
     td:nth-child(n+3) {
         text-align: center;
     }
 
-    /* --- MOBİL FİKSTÜR ARAMA KUTUSU DÜZENLEMESİ (YENİ) --- */
     .fixtures-header {
-        /* Başlık ve arama kutusunu alt alta diziyoruz */
         flex-direction: column;
-        align-items: flex-start; /* Sola hizalıyoruz */
+        align-items: flex-start;
         gap: 1rem;
     }
     #fixture-search {
-        /* Arama kutusunun genişliğini %100 yapıyoruz */
         width: 100%;
-        min-width: 0; /* Masaüstünden gelen min-width'i sıfırlıyoruz */
+        min-width: 0;
     }
 
-    /* --- Diğer Mobil Düzenlemeler --- */
     .branch-groups-layout { 
         grid-template-columns: 1fr; 
     }
@@ -438,7 +451,6 @@ nav a#what-is-it-button::after { display: none; }
        flex-direction: row;
     }
 
-    /* --- MOBİL PROFİL KARTI --- */
     .profile-modal-card {
         width: 95%;
         max-height: 95vh;
@@ -461,7 +473,7 @@ nav a#what-is-it-button::after { display: none; }
         padding: 1rem;
     }
     .profile-stats-container {
-        flex-direction: column; /* Mobil'de alt alta diz */
+        flex-direction: column;
         gap: 1.5rem;
     }
     .stats-grid-new {
@@ -473,4 +485,109 @@ nav a#what-is-it-button::after { display: none; }
     .stat-card-new-label {
         font-size: 0.7rem;
     }
+}
+
+/* --- DÜZELTME: Öne Çıkan Haberler'deki SVG görsellerini küçültmek için eklendi --- */
+#news-content-area img[src$=".svg"] {
+    width: 40%;          /* Görselin genişliğini ayarlar (isteğe göre %50 gibi değiştirilebilir) */
+    max-width: 250px;    /* Çok büyük ekranlarda aşırı büyümesini engeller */
+    height: auto;        /* En-boy oranını korur */
+    display: block;      /* Yatayda ortalamak için block element yapıyoruz */
+    margin: 1rem auto;   /* Üstte/altta boşluk bırakır ve yatayda ortalar */
+}
+
+/* =================================================================
+   ==== KAMPANYA KURGUSU SAYFASI ÖZEL STİLLERİ ====
+   ================================================================= */
+
+/* Ana slogan için stil */
+.campaign-slogan {
+    text-align: center; 
+    font-weight: bold; 
+    color: var(--accent-color); 
+    font-size: 1.2rem; 
+    margin-top: 1rem;
+    text-shadow: 0 0 8px var(--glow-color);
+}
+
+/* Başlıklardaki emojileri daha belirgin yapmak ve boşluk eklemek */
+#campaign-rules-card h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; /* Emoji ile yazı arasına boşluk */
+}
+
+/* Önemli metinleri vurgulamak için */
+.highlight-accent {
+    color: var(--accent-color);
+    font-weight: 700;
+}
+
+.highlight-danger {
+    color: #ff6b6b;
+    font-weight: 700;
+}
+
+/* Bonus puan paragrafı */
+.bonus-point {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: rgba(0, 229, 255, 0.05);
+    border-left: 4px solid var(--accent-color);
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+/* Kritik kuralı bir kutu içine almak */
+.important-note {
+    background: rgba(255, 107, 107, 0.1);
+    border: 1px solid rgba(255, 107, 107, 0.5);
+    border-radius: var(--border-radius);
+    padding: 0.25rem 1.25rem;
+    margin: 1rem 0;
+}
+
+/* Liste elemanlarına daha fazla boşluk vererek okunurluğu artırmak */
+#campaign-rules-card ul {
+    list-style-position: inside;
+    padding-left: 0;
+    margin-top: 1rem;
+}
+#campaign-rules-card ul li {
+    margin-bottom: 0.75rem;
+    line-height: 1.7;
+}
+
+/* Sayfadaki linklerin stilini belirginleştirmek */
+#campaign-rules-card a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+#campaign-rules-card a:hover {
+    text-decoration: underline;
+    text-shadow: 0 0 8px var(--glow-color);
+}
+
+/* Son motto için stil */
+.final-motto {
+    margin-top: 2rem;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-top: 1px solid rgba(0, 229, 255, 0.2);
+    padding-top: 1.5rem;
+}
+
+/* =================================================================
+   ==== KAMPANYA KURGUSU YAZI STİLİ GÜNCELLEMESİ ====
+   ================================================================= */
+
+/* Sayfadaki ana metinlerin (paragraflar, listeler, tablo) fontunu 
+   daha okunaklı olan Roboto ile değiştirir */
+#campaign-rules-card p,
+#campaign-rules-card ul,
+#campaign-rules-card li,
+#campaign-rules-card table {
+    font-family: var(--font-family-body);
 }
