@@ -27,12 +27,12 @@ body {
 .card { padding: 1.5rem; border-radius: var(--border-radius); border: 1px solid rgba(0, 229, 255, 0.3); backdrop-filter: blur(10px); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); animation: fadeInUp 0.5s ease-out forwards; opacity: 0; background: var(--card-bg); }
 .card-title { margin-bottom: 1rem; font-size: 1.1rem; color: var(--accent-color); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
 
-/* --- DÜZELTME: VİDEO ARKA PLANI YERİNE GÖRSEL --- */
+/* --- GÜNCELLEME: ARKA PLAN GÖRSELİ DEĞİŞTİRİLDİ --- */
 .background-video { 
     display: none; 
 }
 body {
-    background: url('../images/Yildizlararasi.jpg') no-repeat center center fixed;
+    background: url('../images/arkaplan.png') no-repeat center center fixed;
     background-size: cover;
 }
 body::before { 
