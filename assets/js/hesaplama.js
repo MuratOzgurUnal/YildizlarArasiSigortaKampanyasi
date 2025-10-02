@@ -34,10 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
         branches.forEach(branch => {
             html += `
                 <tr data-id="${branch.id}">
-                    <td>${branch.name} <span class="branch-percentage">(${branch.basePoint}%)</span></td>
-                    <td><input type="text" class="calc-input" id="${branch.id}-hedef" placeholder="0" inputmode="numeric"></td>
-                    <td><input type="text" class="calc-input" id="${branch.id}-gerceklesen" placeholder="0" inputmode="numeric"></td>
-                    <td style="text-align: center; font-weight: bold; font-size: 1.2rem;" id="${branch.id}-puan">0.00</td>
+                    <td data-label="Sigorta Branşı">${branch.name} <span class="branch-percentage">(${branch.basePoint}%)</span></td>
+                    <td data-label="Haftalık Hedef"><input type="text" class="calc-input" id="${branch.id}-hedef" placeholder="0" inputmode="numeric"></td>
+                    <td data-label="Gerçekleşen"><input type="text" class="calc-input" id="${branch.id}-gerceklesen" placeholder="0" inputmode="numeric"></td>
+                    <td data-label="Kazanılan Puan" style="text-align: center; font-weight: bold; font-size: 1.2rem;" id="${branch.id}-puan">0.00</td>
                 </tr>
             `;
         });

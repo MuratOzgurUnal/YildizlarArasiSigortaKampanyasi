@@ -787,3 +787,74 @@ nav a#what-is-it-button::after { display: none; }
 .calc-input {
     text-align: right;
 }
+
+/* =================================================================
+   ==== HESAPLAMA ARACI MOBİL UYUMLULUK DÜZELTMELERİ ====
+   ================================================================= */
+
+@media (max-width: 768px) {
+    /* Ana yerleşimi dikey hale getir ve puan kutusunu en üste al */
+    .calculator-layout {
+        flex-direction: column;
+    }
+    .total-score-container {
+        order: -1; /* Bu, puan kutusunu en üste taşır */
+        margin-bottom: 2rem;
+        padding: 1rem;
+    }
+    .score-display {
+        font-size: 3.5rem; /* Puan yazısını biraz küçült */
+    }
+
+    /* Tablo başlığını gizle, çünkü etiketleri her satırda göstereceğiz */
+    #calculator-card table thead {
+        display: none;
+    }
+
+    /* Her tablo satırını bir kart gibi yap */
+    #calculator-card table tr {
+        display: block;
+        border: 1px solid rgba(0, 229, 255, 0.2);
+        border-radius: var(--border-radius);
+        margin-bottom: 1rem;
+        padding: 0.5rem;
+    }
+    
+    /* Hücreleri dikey olarak sırala */
+    #calculator-card table td {
+        display: flex;
+        justify-content: space-between; /* Etiket ve içeriği iki yana yasla */
+        align-items: center;
+        padding: 0.8rem 0.5rem;
+        text-align: right; /* İçeriği sağa hizala */
+        border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+    }
+    #calculator-card table tr td:last-child {
+        border-bottom: none; /* Son hücrenin alt çizgisini kaldır */
+    }
+
+    /* JavaScript ile eklediğimiz etiketleri göster */
+    #calculator-card table td::before {
+        content: attr(data-label); /* data-label içeriğini al */
+        font-weight: bold;
+        text-align: left;
+        color: var(--accent-color);
+        margin-right: 1rem;
+    }
+    
+    /* Input alanlarını hücreye sığdır */
+    #calculator-card table td input.calc-input {
+        width: 50%; /* Genişliği ayarla */
+    }
+
+    /* Puan hücresini stilize et */
+    #calculator-card table td[data-label="Kazanılan Puan"] {
+        font-size: 1.5rem;
+        color: #fff;
+    }
+
+    /* Butonları yan yana değil, alt alta ve tam genişlikte yap */
+    .calculator-actions {
+        flex-direction: column;
+    }
+}
