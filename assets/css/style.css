@@ -357,22 +357,252 @@ nav a#what-is-it-button::after { display: none; }
     margin-bottom: 0;
 }
 
-
-/* =================================================================
-   ==== MOBİL UYUMLULUK BÖLÜMÜ ====
-   ================================================================= */
-@media (max-width: 1200px) { 
-    .main-layout { 
-        flex-direction: column; 
-    } 
-    .branch-groups-layout { 
-        grid-template-columns: repeat(2, 1fr); 
-    } 
-    .header-astro { 
-        display: none; 
-    } 
+/* --- DÜZELTME: Öne Çıkan Haberler'deki SVG görsellerini küçültmek için eklendi --- */
+#news-content-area img[src$=".svg"] {
+    width: 40%;
+    max-width: 250px;
+    height: auto;
+    display: block;
+    margin: 1rem auto;
 }
 
+/* =================================================================
+   ==== KAMPANYA KURGUSU SAYFASI ÖZEL STİLLERİ ====
+   ================================================================= */
+.campaign-slogan {
+    text-align: center; 
+    font-weight: bold; 
+    color: var(--accent-color); 
+    font-size: 1.2rem; 
+    margin-top: 1rem;
+    text-shadow: 0 0 8px var(--glow-color);
+}
+#campaign-rules-card h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+.highlight-accent {
+    color: var(--accent-color);
+    font-weight: 700;
+}
+.highlight-danger {
+    color: #ff6b6b;
+    font-weight: 700;
+}
+.bonus-point {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: rgba(0, 229, 255, 0.05);
+    border-left: 4px solid var(--accent-color);
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+.important-note {
+    background: rgba(255, 107, 107, 0.1);
+    border: 1px solid rgba(255, 107, 107, 0.5);
+    border-radius: var(--border-radius);
+    padding: 0.25rem 1.25rem;
+    margin: 1rem 0;
+}
+#campaign-rules-card ul {
+    list-style-position: inside;
+    padding-left: 0;
+    margin-top: 1rem;
+}
+#campaign-rules-card ul li {
+    margin-bottom: 0.75rem;
+    line-height: 1.7;
+}
+#campaign-rules-card a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+#campaign-rules-card a:hover {
+    text-decoration: underline;
+    text-shadow: 0 0 8px var(--glow-color);
+}
+.final-motto {
+    margin-top: 2rem;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-top: 1px solid rgba(0, 229, 255, 0.2);
+    padding-top: 1.5rem;
+}
+#campaign-rules-card p,
+#campaign-rules-card ul,
+#campaign-rules-card li,
+#campaign-rules-card table {
+    font-family: var(--font-family-body);
+}
+
+/* =================================================================
+   ==== HESAPLAMA SAYFASI ÖZEL STİLLERİ ====
+   ================================================================= */
+.calculator-layout {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+.calculator-inputs {
+    flex: 3;
+    min-width: 400px;
+}
+.total-score-container {
+    flex: 1;
+    min-width: 250px;
+    background: rgba(13, 16, 27, 0.7);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--accent-color);
+    box-shadow: 0 0 25px rgba(0, 229, 255, 0.2);
+    text-align: center;
+}
+.total-score-title {
+    font-family: var(--font-family);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 1.1rem;
+    color: var(--text-color);
+    opacity: 0.9;
+    margin-bottom: 1rem;
+}
+.score-display {
+    font-family: var(--font-family);
+    font-size: 4.5rem;
+    font-weight: 900;
+    color: var(--accent-color);
+    text-shadow: 0 0 5px #fff, 0 0 20px var(--glow-color);
+    line-height: 1;
+}
+.calc-input {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: rgba(13, 16, 27, 0.9);
+    border: 1px solid rgba(0, 229, 255, 0.5);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-family: var(--font-family-body);
+    font-size: 1rem;
+    text-align: right;
+}
+.calc-input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 10px var(--glow-color);
+}
+.bonus-section {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: rgba(0, 229, 255, 0.05);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+.bonus-section label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-family-body);
+}
+.bonus-section input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent-color);
+}
+.calculator-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+}
+.calculator-actions button {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #fff;
+    border: 1px solid var(--accent-color);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    text-transform: uppercase;
+    background: transparent;
+    transition: all 0.3s ease;
+}
+.calculator-actions button#calculate-button {
+    background-color: var(--accent-color);
+    color: var(--dark-bg);
+}
+.calculator-actions button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px var(--glow-color);
+}
+.score-display.pulse {
+    animation: pulse-effect 0.5s ease-out;
+}
+@keyframes pulse-effect {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* =================================================================
+   ==== HESAPLAMA SAYFASI VE MENÜ GÖRSEL İYİLEŞTİRMELERİ (SON HALİ) ====
+   ================================================================= */
+.nav-button-stacked {
+    color: var(--text-color);
+    background-color: rgba(0, 229, 255, 0.15);
+    border: 1px solid rgba(0, 229, 255, 0.4);
+    border-radius: 9px;
+    padding: 0.4rem 0.8rem;
+    text-align: center;
+    font-size: 0.65rem;
+    line-height: 1.2;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+.nav-button-stacked:hover,
+.nav-button-stacked.active {
+    color: var(--dark-bg);
+    background-color: var(--accent-color);
+    box-shadow: 0 0 18px var(--glow-color);
+    text-shadow: none;
+    transform: translateY(-2px);
+}
+.nav-button-stacked::after {
+    display: none !important;
+}
+.bonus-section label {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    font-weight: 700;
+    transition: color 0.3s;
+}
+.bonus-section label:hover {
+    color: var(--accent-color);
+}
+.branch-percentage {
+    opacity: 0.6;
+    font-size: 0.8rem;
+    font-weight: normal;
+    margin-left: 5px;
+    font-family: var(--font-family-body);
+}
+.calc-input {
+    text-align: right;
+}
+
+/* =================================================================
+   ==== GENEL MOBİL UYUMLULUK DÜZELTMELERİ (SON VE TAM HALİ) ====
+   ================================================================= */
 @media (max-width: 768px) {
     .container {
         padding: 1rem 15px;
@@ -393,12 +623,16 @@ nav a#what-is-it-button::after { display: none; }
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 0.5rem 1.25rem; 
+        gap: 0.5rem 1rem; 
     }
     nav a {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         letter-spacing: 1px;
         padding: 0.2rem 0;
+    }
+    .nav-button-stacked {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.6rem;
     }
     #what-is-it-button {
         font-size: 0.7rem;
@@ -485,333 +719,24 @@ nav a#what-is-it-button::after { display: none; }
     .stat-card-new-label {
         font-size: 0.7rem;
     }
-}
 
-/* --- DÜZELTME: Öne Çıkan Haberler'deki SVG görsellerini küçültmek için eklendi --- */
-#news-content-area img[src$=".svg"] {
-    width: 40%;          /* Görselin genişliğini ayarlar (isteğe göre %50 gibi değiştirilebilir) */
-    max-width: 250px;    /* Çok büyük ekranlarda aşırı büyümesini engeller */
-    height: auto;        /* En-boy oranını korur */
-    display: block;      /* Yatayda ortalamak için block element yapıyoruz */
-    margin: 1rem auto;   /* Üstte/altta boşluk bırakır ve yatayda ortalar */
-}
-
-/* =================================================================
-   ==== KAMPANYA KURGUSU SAYFASI ÖZEL STİLLERİ ====
-   ================================================================= */
-
-/* Ana slogan için stil */
-.campaign-slogan {
-    text-align: center; 
-    font-weight: bold; 
-    color: var(--accent-color); 
-    font-size: 1.2rem; 
-    margin-top: 1rem;
-    text-shadow: 0 0 8px var(--glow-color);
-}
-
-/* Başlıklardaki emojileri daha belirgin yapmak ve boşluk eklemek */
-#campaign-rules-card h3 {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem; /* Emoji ile yazı arasına boşluk */
-}
-
-/* Önemli metinleri vurgulamak için */
-.highlight-accent {
-    color: var(--accent-color);
-    font-weight: 700;
-}
-
-.highlight-danger {
-    color: #ff6b6b;
-    font-weight: 700;
-}
-
-/* Bonus puan paragrafı */
-.bonus-point {
-    margin-top: 1.5rem;
-    padding: 1rem;
-    background-color: rgba(0, 229, 255, 0.05);
-    border-left: 4px solid var(--accent-color);
-    border-radius: 0 var(--border-radius) var(--border-radius) 0;
-}
-
-/* Kritik kuralı bir kutu içine almak */
-.important-note {
-    background: rgba(255, 107, 107, 0.1);
-    border: 1px solid rgba(255, 107, 107, 0.5);
-    border-radius: var(--border-radius);
-    padding: 0.25rem 1.25rem;
-    margin: 1rem 0;
-}
-
-/* Liste elemanlarına daha fazla boşluk vererek okunurluğu artırmak */
-#campaign-rules-card ul {
-    list-style-position: inside;
-    padding-left: 0;
-    margin-top: 1rem;
-}
-#campaign-rules-card ul li {
-    margin-bottom: 0.75rem;
-    line-height: 1.7;
-}
-
-/* Sayfadaki linklerin stilini belirginleştirmek */
-#campaign-rules-card a {
-    color: var(--accent-color);
-    text-decoration: none;
-    font-weight: 700;
-    transition: all 0.3s ease;
-}
-#campaign-rules-card a:hover {
-    text-decoration: underline;
-    text-shadow: 0 0 8px var(--glow-color);
-}
-
-/* Son motto için stil */
-.final-motto {
-    margin-top: 2rem;
-    text-align: center;
-    font-weight: bold;
-    font-size: 1.1rem;
-    border-top: 1px solid rgba(0, 229, 255, 0.2);
-    padding-top: 1.5rem;
-}
-
-/* =================================================================
-   ==== KAMPANYA KURGUSU YAZI STİLİ GÜNCELLEMESİ ====
-   ================================================================= */
-
-/* Sayfadaki ana metinlerin (paragraflar, listeler, tablo) fontunu 
-   daha okunaklı olan Roboto ile değiştirir */
-#campaign-rules-card p,
-#campaign-rules-card ul,
-#campaign-rules-card li,
-#campaign-rules-card table {
-    font-family: var(--font-family-body);
-}
-/* =================================================================
-   ==== HESAPLAMA SAYFASI ÖZEL STİLLERİ ====
-   ================================================================= */
-
-.calculator-layout {
-    display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-}
-
-.calculator-inputs {
-    flex: 3;
-    min-width: 400px;
-}
-
-.total-score-container {
-    flex: 1;
-    min-width: 250px;
-    background: rgba(13, 16, 27, 0.7);
-    border-radius: var(--border-radius);
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--accent-color);
-    box-shadow: 0 0 25px rgba(0, 229, 255, 0.2);
-    text-align: center;
-}
-
-.total-score-title {
-    font-family: var(--font-family);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-size: 1.1rem;
-    color: var(--text-color);
-    opacity: 0.9;
-    margin-bottom: 1rem;
-}
-
-.score-display {
-    font-family: var(--font-family);
-    font-size: 4.5rem;
-    font-weight: 900;
-    color: var(--accent-color);
-    text-shadow: 0 0 5px #fff, 0 0 20px var(--glow-color);
-    line-height: 1;
-}
-
-.calc-input {
-    width: 100%;
-    padding: 0.75rem;
-    background-color: rgba(13, 16, 27, 0.9);
-    border: 1px solid rgba(0, 229, 255, 0.5);
-    border-radius: 8px;
-    color: var(--text-color);
-    font-family: var(--font-family-body);
-    font-size: 1rem;
-}
-
-.calc-input:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 10px var(--glow-color);
-}
-
-.bonus-section {
-    margin-top: 1.5rem;
-    padding: 1rem;
-    background-color: rgba(0, 229, 255, 0.05);
-    border-radius: var(--border-radius);
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.bonus-section label {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-family: var(--font-family-body);
-}
-
-.bonus-section input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    accent-color: var(--accent-color);
-}
-
-
-.calculator-actions {
-    margin-top: 1.5rem;
-    display: flex;
-    gap: 1rem;
-}
-
-.calculator-actions button {
-    flex: 1;
-    padding: 0.8rem 1rem;
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: #fff;
-    border: 1px solid var(--accent-color);
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    text-transform: uppercase;
-    background: transparent;
-    transition: all 0.3s ease;
-}
-
-.calculator-actions button#calculate-button {
-    background-color: var(--accent-color);
-    color: var(--dark-bg);
-}
-
-.calculator-actions button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 15px var(--glow-color);
-}
-
-/* Puan gösterme animasyonu */
-.score-display.pulse {
-    animation: pulse-effect 0.5s ease-out;
-}
-
-@keyframes pulse-effect {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-
-@media (max-width: 900px) {
-    .calculator-layout {
-        flex-direction: column-reverse;
-    }
-}
-
-/* =================================================================
-   ==== HESAPLAMA SAYFASI VE MENÜ GÖRSEL İYİLEŞTİRMELERİ (SON HALİ) ====
-   ================================================================= */
-
-/* Menüdeki özel "PUAN HESAPLAMA" butonu (DAHA KÜÇÜK VERSİYON) */
-.nav-button-stacked {
-    color: var(--text-color);
-    background-color: rgba(0, 229, 255, 0.15);
-    border: 1px solid rgba(0, 229, 255, 0.4);
-    border-radius: 9px; /* Kenar yuvarlaklığı ayarlandı */
-    padding: 0.4rem 0.8rem; /* İç boşluk azaltıldı */
-    text-align: center;
-    font-size: 0.65rem; /* Yazı boyutu küçültüldü */
-    line-height: 1.2;
-    font-weight: 700;
-    transition: all 0.3s ease;
-}
-
-/* Üzerine gelince ve aktif olunca efekt */
-.nav-button-stacked:hover,
-.nav-button-stacked.active {
-    color: var(--dark-bg);
-    background-color: var(--accent-color);
-    box-shadow: 0 0 18px var(--glow-color);
-    text-shadow: none;
-    transform: translateY(-2px);
-}
-
-/* Bu özel butonun altındaki çizgiyi her zaman kaldır */
-.nav-button-stacked::after {
-    display: none !important;
-}
-
-/* Bonus checkbox etiketini daha dikkat çekici yap */
-.bonus-section label {
-    font-size: 1.1rem;
-    color: var(--text-color);
-    font-weight: 700;
-    transition: color 0.3s;
-}
-.bonus-section label:hover {
-    color: var(--accent-color);
-}
-
-/* Tablodaki yüzde yazıları için stil */
-.branch-percentage {
-    opacity: 0.6;
-    font-size: 0.8rem;
-    font-weight: normal;
-    margin-left: 5px;
-    font-family: var(--font-family-body);
-}
-
-/* Input'lardaki text'i sağa hizala */
-.calc-input {
-    text-align: right;
-}
-
-/* =================================================================
-   ==== HESAPLAMA ARACI MOBİL UYUMLULUK DÜZELTMELERİ ====
-   ================================================================= */
-
-@media (max-width: 768px) {
-    /* Ana yerleşimi dikey hale getir ve puan kutusunu en üste al */
+    /* =========================================================
+       ==== HESAPLAMA ARACI MOBİL UYUMLULUK DÜZELTMELERİ ====
+       ========================================================= */
     .calculator-layout {
         flex-direction: column;
     }
     .total-score-container {
-        order: -1; /* Bu, puan kutusunu en üste taşır */
+        order: -1; 
         margin-bottom: 2rem;
         padding: 1rem;
     }
     .score-display {
-        font-size: 3.5rem; /* Puan yazısını biraz küçült */
+        font-size: 3.5rem; 
     }
-
-    /* Tablo başlığını gizle, çünkü etiketleri her satırda göstereceğiz */
     #calculator-card table thead {
         display: none;
     }
-
-    /* Her tablo satırını bir kart gibi yap */
     #calculator-card table tr {
         display: block;
         border: 1px solid rgba(0, 229, 255, 0.2);
@@ -819,42 +744,37 @@ nav a#what-is-it-button::after { display: none; }
         margin-bottom: 1rem;
         padding: 0.5rem;
     }
-    
-    /* Hücreleri dikey olarak sırala */
     #calculator-card table td {
         display: flex;
-        justify-content: space-between; /* Etiket ve içeriği iki yana yasla */
+        justify-content: space-between; 
         align-items: center;
         padding: 0.8rem 0.5rem;
-        text-align: right; /* İçeriği sağa hizala */
+        text-align: right; 
         border-bottom: 1px solid rgba(0, 229, 255, 0.1);
     }
     #calculator-card table tr td:last-child {
-        border-bottom: none; /* Son hücrenin alt çizgisini kaldır */
+        border-bottom: none; 
     }
-
-    /* JavaScript ile eklediğimiz etiketleri göster */
     #calculator-card table td::before {
-        content: attr(data-label); /* data-label içeriğini al */
+        content: attr(data-label);
         font-weight: bold;
         text-align: left;
         color: var(--accent-color);
         margin-right: 1rem;
     }
-    
-    /* Input alanlarını hücreye sığdır */
     #calculator-card table td input.calc-input {
-        width: 50%; /* Genişliği ayarla */
+        width: auto;
+        flex-basis: 55%;
+        max-width: 160px;
     }
-
-    /* Puan hücresini stilize et */
     #calculator-card table td[data-label="Kazanılan Puan"] {
         font-size: 1.5rem;
         color: #fff;
     }
-
-    /* Butonları yan yana değil, alt alta ve tam genişlikte yap */
     .calculator-actions {
         flex-direction: column;
+    }
+    .bonus-section label {
+        font-size: 1rem;
     }
 }

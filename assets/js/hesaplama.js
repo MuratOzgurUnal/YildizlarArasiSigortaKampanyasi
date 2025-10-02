@@ -15,15 +15,14 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'bes-adet', name: 'BES Adet', basePoint: 30 }
     ];
 
-    // YENİ VE DOĞRU: Sayıları binlik ayraçla formatlayan fonksiyon
+    // Sayıları binlik ayraçla formatlayan fonksiyon
     function formatNumber(value) {
         if (!value) return '';
-        // Sadece rakamları al, noktaları temizle ve yeniden formatla
         const numberString = value.toString().replace(/\./g, '');
         return numberString.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     }
 
-    // YENİ VE DOĞRU: Formatlanmış sayıdan normal sayıya dönen fonksiyon
+    // Formatlanmış sayıdan normal sayıya dönen fonksiyon
     function parseNumber(value) {
         return parseFloat(value.replace(/\./g, '')) || 0;
     }
@@ -43,14 +42,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         calculatorBody.innerHTML = html;
 
-        // YENİ VE DOĞRU: Input'lara anlık formatlama event listener'ı ekle
+        // Input'lara anlık formatlama event listener'ı ekle
         document.querySelectorAll('.calc-input').forEach(input => {
             input.addEventListener('input', (e) => {
                 const selectionStart = e.target.selectionStart;
                 const originalLength = e.target.value.length;
                 e.target.value = formatNumber(e.target.value);
                 const newLength = e.target.value.length;
-                // Cursor pozisyonunu ayarla
                 e.target.setSelectionRange(selectionStart + (newLength - originalLength), selectionStart + (newLength - originalLength));
             });
         });
@@ -65,16 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const gerceklesenInput = document.getElementById(`${branch.id}-gerceklesen`);
             const puanDisplay = document.getElementById(`${branch.id}-puan`);
 
-            // DOĞRU HESAPLAMA: Formatlanmış değeri sayıya çevir
             const hedef = parseNumber(hedefInput.value);
             const gerceklesen = parseNumber(gerceklesenInput.value);
             
             let branchScore = 0;
             
-            // DOĞRU MANTIK: Sinerji bonusu temel puanı 30'dan 40'a çıkarır
             let basePoint = branch.basePoint;
             if (branch.id === 'bes-adet' && sinerjiBonusuCheckbox.checked) {
-                basePoint = 40; // Temel puanı 30 yerine 40 olarak al
+                basePoint = 40;
             }
 
             if (hedef > 0) {
