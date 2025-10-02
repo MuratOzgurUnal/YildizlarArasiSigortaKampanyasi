@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yıldızlar Arası Sigorta Kampanyası - Puan Hesaplama</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <img src="./assets/images/astronot1.svg" class="header-astro astro-left" alt="Astronot 1">
+        <div class="header-center">
+            <h1 class="main-title">Yıldızlar Arası Sigorta Kampanyası</h1>
+            <nav>
+                <a href="./index.html">Ana Sayfa</a>
+                <a href="./sube-klasmanlari.html">Klasmanlar</a>
+                <a href="./fikstur.html">Fikstür</a>
+                <a href="./kampanya-kurgusu.html">Kampanya Kurgusu</a>
+                <a href="./hesaplama-araci.html" class="nav-button-stacked active">PUAN<br>HESAPLAMA</a>
+                <a href="#" id="what-is-it-button">NEDİR BU <br> İHTİMALSİZLİK MOTORU?</a>
+            </nav>
+        </div>
+        <img src="./assets/images/astronot2.svg" class="header-astro astro-right" alt="Astronot 2">
+    </header>
+
+    <main class="container">
+        <section class="card" id="calculator-card">
+            <h2 class="card-title">Haftalık Puan Hesaplama Aracı</h2>
+            <div class="calculator-layout">
+                <div class="calculator-inputs">
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Sigorta Branşı</th>
+                                    <th>Haftalık Hedef</th>
+                                    <th>Gerçekleşen</th>
+                                    <th style="text-align: center;">Kazanılan Puan</th>
+                                </tr>
+                            </thead>
+                            <tbody id="calculator-body">
+                                <!-- Branşlar JS ile buraya eklenecek -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="bonus-section">
+                         <label for="sinerji-bonusu">
+                            <input type="checkbox" id="sinerji-bonusu">
+                            Bireysel Bankacılık haftalık BES Adet hedefini tutturdu mu?
+                        </label>
+                    </div>
+                    <div class="calculator-actions">
+                        <button id="calculate-button">Hesapla</button>
+                        <button id="reset-button">Sıfırla</button>
+                    </div>
+                </div>
+
+                <div class="total-score-container">
+                    <h3 class="total-score-title">Toplam Puan</h3>
+                    <div id="total-score-display" class="score-display">0</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="improbability-modal" class="modal-container">
+        <div class="modal-content">
+            <span class="modal-close-button">&times;</span>
+            <div id="modal-body-content"></div>
+        </div>
+    </div>
+
+    <script src="./assets/js/api.js" type="module"></script>
+    <script src="./assets/js/main.js" type="module"></script>
+    <script src="./assets/js/hesaplama.js"></script>
+</body>
+</html>
