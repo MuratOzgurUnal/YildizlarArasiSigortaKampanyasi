@@ -1,8 +1,9 @@
-// GÜNCELLEME: Fonksiyonlar api.js dosyasından içe aktarılıyor.
+// assets/js/main.js - TÜM GÜNCELLEMELERİ İÇEREN SON HALİ
+
 import { fetchGoogleSheetData, fetchGeminiData } from './api.js';
 
 // =================================================================
-// YARDIMCI FONKSİYONLARI
+// YARDIMCI FONKSİYONLAR
 // =================================================================
 function getLogoUrl(branchName) {
     if (!branchName) return '';
@@ -19,18 +20,170 @@ function displayError(container, message = "Veriler yüklenemedi. Bağlantı Ba�
 // =================================================================
 async function loadWeeklyNews() {
     const newsContainer = document.getElementById('news-content-area');
-    if (!newsContainer) return;
+    const matchupsContainer = document.getElementById('weekly-matchups-card');
 
-    try {
-        const response = await fetch('haberler.html');
-        if (!response.ok) {
-            throw new Error('Haberler dosyası bulunamadı.');
+    if (newsContainer) {
+        try {
+            const response = await fetch('haberler.html');
+            if (!response.ok) throw new Error('Haberler dosyası bulunamadı.');
+            const newsHtml = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(newsHtml, 'text/html');
+            let groupedHtml = '';
+            const children = Array.from(doc.body.children);
+            for (let i = 0; i < children.length; i += 3) {
+                groupedHtml += `<div>${children[i].outerHTML}${children[i+1] ? children[i+1].outerHTML : ''}${children[i+2] ? children[i+2].outerHTML : ''}</div>`;
+            }
+            newsContainer.innerHTML = groupedHtml;
+        } catch (error) {
+            console.error('Haberler yüklenirken hata oluştu:', error);
+            displayError(newsContainer, 'Haberler yüklenemedi.');
         }
-        const newsHtml = await response.text();
-        newsContainer.innerHTML = newsHtml;
+    }
+    
+    if (matchupsContainer) {
+        loadWeeklyMatchups(matchupsContainer);
+    }
+}
+
+// =================================================================
+// HAFTANIN KARŞILAŞMALARI BÖLÜMÜ (GÜNCELLENDİ)
+// =================================================================
+
+function getCurrentCampaignWeek() {
+    const startDate = new Date('2025-10-06T00:00:00Z');
+    const today = new Date();
+    if (today < startDate) return 1;
+    const diffTime = Math.abs(today - startDate);
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const currentWeek = Math.floor(diffDays / 7) + 1;
+    return currentWeek > 12 ? 12 : currentWeek;
+}
+
+// Karşılaşmaları HTML olarak formatlayan fonksiyon (YENİ VE İYİLEŞTİRİLMİŞ HALİ)
+function formatMatchups(matches, allBranchData) {
+    if (!matches || matches.length === 0) {
+        return '<p>Bu hafta için karşılaşma bulunamadı.</p>';
+    }
+
+    return matches.map(match => {
+        const teamA = allBranchData.find(branch => branch.SubeAdi === match.EvSahibi);
+        const teamB = allBranchData.find(branch => branch.SubeAdi === match.Deplasman);
+
+        if (!teamA || !teamB) return ''; // Eğer şube verisi bulunamazsa bu maçı atla
+
+        // Puan detaylarını data attribute olarak saklıyoruz
+        const teamA_details = `data-saglik="${teamA.Saglik || 0}" data-hayat="${teamA.Hayat || 0}" data-elementer="${teamA.Elementer || 0}" data-besciro="${teamA.BESCiro || 0}" data-besadet="${teamA.BESAdet || 0}"`;
+        const teamB_details = `data-saglik="${teamB.Saglik || 0}" data-hayat="${teamB.Hayat || 0}" data-elementer="${teamB.Elementer || 0}" data-besciro="${teamB.BESCiro || 0}" data-besadet="${teamB.BESAdet || 0}"`;
+
+        return `
+            <div class="matchup-item">
+                <div class="matchup-team team-a">
+                    <img src="${getLogoUrl(teamA.SubeAdi)}" class="matchup-team-logo" alt="${teamA.SubeAdi}" onerror="this.style.display='none'">
+                    <span class="matchup-team-name">${teamA.SubeAdi}</span>
+                    <div class="matchup-main-score clickable-score" ${teamA_details}>
+                        ${teamA.Puan || 0}
+                    </div>
+                </div>
+                <div class="matchup-vs-graphic">VS</div>
+                <div class="matchup-team team-b">
+                    <img src="${getLogoUrl(teamB.SubeAdi)}" class="matchup-team-logo" alt="${teamB.SubeAdi}" onerror="this.style.display='none'">
+                    <span class="matchup-team-name">${teamB.SubeAdi}</span>
+                    <div class="matchup-main-score clickable-score" ${teamB_details}>
+                        ${teamB.Puan || 0}
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// Ana fonksiyon: Verileri çeker ve bölümü doldurur (YENİ VE İYİLEŞTİRİLMİŞ HALİ)
+async function loadWeeklyMatchups(container) {
+    let contentArea;
+    try {
+        const response = await fetch('karsilasmalar.html');
+        if (!response.ok) throw new Error(`karsilasmalar.html dosyası bulunamadı.`);
+        
+        container.innerHTML = await response.text();
+        contentArea = container.querySelector('#weekly-matchups-content');
+        if (!contentArea) throw new Error('#weekly-matchups-content alanı bulunamadı.');
+        
+        contentArea.innerHTML = '<div class="loader"></div>';
+
+        const [fixturesData, allBranchData] = await Promise.all([
+            fetchGoogleSheetData('Fikstur!A1:E'),
+            fetchGoogleSheetData('Karsilasmalar!A1:H')
+        ]);
+        
+        const currentWeek = getCurrentCampaignWeek();
+        const weeklyFixtures = fixturesData.filter(f => parseInt(f.Hafta) === currentWeek);
+
+        const formattedHtml = formatMatchups(weeklyFixtures, allBranchData);
+        contentArea.innerHTML = formattedHtml;
+
+        // YENİ: Tıklama olayını dinleyiciyi ekle
+        attachScoreTooltipListener();
+
     } catch (error) {
-        console.error('Haberler yüklenirken hata oluştu:', error);
-        displayError(newsContainer, 'Haberler yüklenemedi.');
+        console.error('Haftanın karşılaşmaları yüklenirken hata:', error);
+        const userFriendlyError = `<p class="error-message">Karşılaşmalar yüklenemedi. Lütfen daha sonra tekrar deneyin.</p>`;
+        if (container) container.innerHTML = userFriendlyError;
+    }
+}
+
+// YENİ: Puan detayları penceresini yöneten fonksiyonlar
+function attachScoreTooltipListener() {
+    document.querySelectorAll('.clickable-score').forEach(scoreElement => {
+        scoreElement.addEventListener('click', (event) => {
+            // Mevcut tooltip varsa kaldır
+            removeExistingTooltip();
+            
+            const element = event.currentTarget;
+            const rect = element.getBoundingClientRect();
+            
+            // Verileri data-attributes'dan al
+            const details = element.dataset;
+            
+            // Tooltip elementini oluştur
+            const tooltip = document.createElement('div');
+            tooltip.className = 'score-tooltip';
+            tooltip.innerHTML = `
+                <h4>Puan Dökümü</h4>
+                <ul>
+                    <li><span>Sağlık:</span> <strong>${details.saglik}</strong></li>
+                    <li><span>Hayat:</span> <strong>${details.hayat}</strong></li>
+                    <li><span>Elementer:</span> <strong>${details.elementer}</strong></li>
+                    <li><span>BES Ciro:</span> <strong>${details.besciro}</strong></li>
+                    <li><span>BES Adet:</span> <strong>${details.besadet}</strong></li>
+                </ul>
+            `;
+            document.body.appendChild(tooltip);
+
+            // Tooltip'i konumlandır
+            tooltip.style.left = `${rect.left + rect.width / 2 - tooltip.offsetWidth / 2}px`;
+            tooltip.style.top = `${rect.bottom + window.scrollY + 10}px`;
+
+            // Dışarı tıklayınca kapatmak için event listener
+            setTimeout(() => {
+                document.addEventListener('click', closeTooltipOnClickOutside, { once: true });
+            }, 0);
+
+            event.stopPropagation(); // Olayın daha fazla yayılmasını engelle
+        });
+    });
+}
+
+function removeExistingTooltip() {
+    const existingTooltip = document.querySelector('.score-tooltip');
+    if (existingTooltip) {
+        existingTooltip.remove();
+    }
+}
+
+function closeTooltipOnClickOutside(event) {
+    if (!event.target.closest('.score-tooltip')) {
+        removeExistingTooltip();
     }
 }
 
@@ -93,7 +246,7 @@ function renderAllFixtures(data) {
 }
 
 // =================================================================
-// GÜNCELLENMİŞ: ŞUBE PROFİL KARTI MODAL FONKSİYONLARI
+// ŞUBE PROFİL KARTI MODAL FONKSİYONLARI
 // =================================================================
 async function showBranchProfileModal(branchName) {
     const modalOverlay = document.createElement('div');
@@ -139,7 +292,6 @@ async function showBranchProfileModal(branchName) {
             f.EvSahibiSkor && f.DeplasmanSkor
         );
 
-        // YENİ TASARIM İÇİN HTML YAPISI
         const topLayoutHtml = `
             <div class="profile-stats-container">
                 <div class="chart-and-legend">
@@ -178,7 +330,6 @@ async function showBranchProfileModal(branchName) {
             </div>
         `;
 
-        // OYNANAN MAÇLAR KISMINA "HAFTA" BİLGİSİ EKLENDİ
         const fixturesHtml = branchFixtures.length > 0 ? `
             <h3 class="profile-section-title">Oynanan Maçlar</h3>
             <div class="matches-list">
@@ -197,31 +348,24 @@ async function showBranchProfileModal(branchName) {
 
         modalBody.innerHTML = topLayoutHtml + fixturesHtml;
 
-        // PASTA GRAFİĞİ "HALKA GRAFİK" (DOUGHNUT) OLARAK GÜNCELLENDİ
         const ctx = document.getElementById('matchResultChart').getContext('2d');
         new Chart(ctx, {
-            type: 'doughnut', // Grafik türü 'doughnut' olarak değiştirildi
+            type: 'doughnut',
             data: {
                 labels: ['Galibiyet', 'Beraberlik', 'Mağlubiyet'],
                 datasets: [{
                     data: [branchData.Galibiyet, branchData.Beraberlik, branchData.Maglubiyet],
-                    backgroundColor: [
-                        '#28a745', // Galibiyet için Yeşil
-                        '#6c757d', // Beraberlik için Gri
-                        '#dc3545'  // Mağlubiyet için Kırmızı
-                    ],
-                    borderColor: 'rgba(26, 34, 56, 0.8)', // Arka plan rengiyle uyumlu
+                    backgroundColor: ['#28a745', '#6c757d', '#dc3545'],
+                    borderColor: 'rgba(26, 34, 56, 0.8)',
                     borderWidth: 3,
                     hoverOffset: 4
                 }]
             },
             options: {
                 responsive: true,
-                cutout: '70%', // Ortadaki boşluk oranı
+                cutout: '70%',
                 plugins: {
-                    legend: {
-                        display: false // Özel legend kullandığımız için bunu kapattık
-                    },
+                    legend: { display: false },
                     tooltip: {
                         bodyFont: { family: "'Roboto', sans-serif" },
                         titleFont: { family: "'Roboto', sans-serif" }
@@ -235,7 +379,6 @@ async function showBranchProfileModal(branchName) {
         displayError(modalOverlay.querySelector('.profile-modal-body'), "Şube profili yüklenemedi.");
     }
 }
-
 
 // =================================================================
 // SAYFA BAŞLATMA FONKSİYONLARI
@@ -324,7 +467,7 @@ if (improbabilityButton) {
 }
 
 // =================================================================
-// AÇILIR PENCERE (MODAL) MANTIĞI - DİNAMİK İÇERİKLİ
+// AÇILIR PENCERE (MODAL) MANTIĞI
 // =================================================================
 let isModalContentLoaded = false;
 

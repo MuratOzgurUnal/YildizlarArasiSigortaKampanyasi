@@ -10,9 +10,7 @@
     <link rel="stylesheet" href="./assets/css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-:<body>
-    <!-- Video kaldırıldı, arka plan CSS'ten geliyor -->
-
+<body>
     <header class="site-header">
         <img src="./assets/images/astronot1.svg" class="header-astro astro-left" alt="Astronot 1">
         <div class="header-center">
@@ -40,11 +38,8 @@
                     </div>
                     <p class="improbability-note">Dikkat! Sonuçlar tamamen anlamsız, bir o kadar da gerçek olabilir.</p>
                 </div>
-                <div class="card sidebar-content" id="weekly-news-card">
-                    <h2 class="card-title">ÖNE ÇIKAN HABERLER</h2>
-                    <div id="news-content-area">
-                        <!-- Haber içeriği main.js tarafından buraya yüklenecek -->
-                    </div>
+                <div class="card sidebar-content" id="weekly-matchups-card">
+                    <!-- İçerik main.js tarafından yüklenecek -->
                 </div>
             </div>
             <div class="card main-content" id="standings-container">
@@ -64,6 +59,14 @@
                         </thead>
                         <tbody id="standings-body"></tbody>
                     </table>
+                </div>
+
+                <!-- YENİ KONUM: Öne Çıkan Haberler Bölümü Buraya Taşındı -->
+                <div id="bottom-news-section">
+                     <h2 class="card-title">ÖNE ÇIKAN HABERLER</h2>
+                     <div id="news-content-area">
+                         <!-- Haber içeriği main.js tarafından buraya yüklenecek -->
+                     </div>
                 </div>
             </div>
         </section>

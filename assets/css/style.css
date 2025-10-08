@@ -1,7 +1,7 @@
-/* --- Okunabilirlik için Roboto fontu eklendi --- */
+/* assets/css/style.css - TÜM GÜNCELLEMELERİ İÇEREN SON HALİ */
+
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@400;700&display=swap');
 
-/* --- Değişkenler ve Temel Kurulum --- */
 :root { 
     --font-family: 'Orbitron', sans-serif; 
     --font-family-body: 'Roboto', sans-serif;
@@ -27,10 +27,6 @@ body {
 .card { padding: 1.5rem; border-radius: var(--border-radius); border: 1px solid rgba(0, 229, 255, 0.3); backdrop-filter: blur(10px); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); animation: fadeInUp 0.5s ease-out forwards; opacity: 0; background: var(--card-bg); }
 .card-title { margin-bottom: 1rem; font-size: 1.1rem; color: var(--accent-color); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
 
-/* --- GÜNCELLEME: ARKA PLAN GÖRSELİ DEĞİŞTİRİLDİ --- */
-.background-video { 
-    display: none; 
-}
 body {
     background: url('../images/arkaplan.png') no-repeat center center fixed;
     background-size: cover;
@@ -46,7 +42,6 @@ body::before {
     z-index: -1; 
 }
 
-/* --- PROFESYONEL HEADER --- */
 .site-header { width: 100%; padding: 1rem 2rem; position: sticky; top: 0; z-index: 10; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0, 229, 255, 0.2); background: var(--header-bg); }
 .header-center { text-align: center; }
 .header-astro { width: 100px; height: auto; }
@@ -60,7 +55,6 @@ nav a::after { content: ''; position: absolute; width: 0; height: 3px; bottom: -
 nav a:hover, nav a.active { color: var(--accent-color); text-shadow: 0 0 10px var(--glow-color); }
 nav a:hover::after, nav a.active::after { width: 100%; }
 
-/* --- ANA SAYFA DÜZENİ --- */
 .main-layout { display: flex; flex-direction: row; gap: 1.5rem; }
 .main-content { flex: 3; }
 .sidebar-content { flex: 2; }
@@ -74,7 +68,6 @@ tbody tr { border-bottom: 1px solid rgba(0, 229, 255, 0.2); }
 tbody tr.clickable-row { cursor: pointer; transition: background-color 0.3s; }
 tbody tr.clickable-row:hover { background-color: rgba(0, 229, 255, 0.1); }
 
-/* --- KLASMANLAR SAYFASI --- */
 .branch-groups-layout { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
 .group-container { padding: 1.5rem; border-radius: var(--border-radius); border: 1px solid rgba(0, 229, 255, 0.2); }
 .group-title { font-size: 1.2rem; color: var(--accent-color); margin-bottom: 1rem; border-bottom: 1px solid var(--accent-color); padding-bottom: 0.5rem; }
@@ -82,7 +75,6 @@ tbody tr.clickable-row:hover { background-color: rgba(0, 229, 255, 0.1); }
 .group-list li { padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; font-size: 0.9rem; }
 .group-list li:last-child { border-bottom: none; }
 
-/* --- FİKSTÜR SAYFASI --- */
 .fixtures-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
 #fixture-search { padding: 0.75rem; border-radius: var(--border-radius); border: 1px solid var(--accent-color); background-color: transparent; color: inherit; font-family: var(--font-family); min-width: 250px; }
 .week-container { margin-bottom: 2.5rem; padding-top: 1.5rem; border-top: 2px solid var(--accent-color); box-shadow: 0 -8px 20px -15px var(--glow-color); }
@@ -95,7 +87,6 @@ tbody tr.clickable-row:hover { background-color: rgba(0, 229, 255, 0.1); }
 .score-info-fixture .score { color: var(--accent-color); font-size: 1.3rem; }
 .vs-separator-fixture { margin: 0 0.5rem; }
 
-/* --- Diğer Modüller --- */
 #improbability-drive-container { 
     display: flex; 
     flex-direction: column; 
@@ -133,7 +124,20 @@ tbody tr.clickable-row:hover { background-color: rgba(0, 229, 255, 0.1); }
 }
 #improbability-button:hover { transform: translateY(-2px); box-shadow: 0 0 15px var(--glow-color); }
 #improbability-button:active { transform: translateY(1px); box-shadow: 0 0 8px var(--glow-color); }
-.improbability-message-area { width: 100%; margin: 1rem 0; padding: 1rem; font-size: 0.9rem; min-height: 100px; border: 1px dashed rgba(0, 229, 255, 0.5); flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+
+.improbability-message-area { 
+    width: 100%; 
+    margin: 1rem 0; 
+    padding: 1rem; 
+    font-size: 0.9rem; 
+    border: 1px dashed rgba(0, 229, 255, 0.5); 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    text-align: center; 
+}
+
 .improbability-note { font-size: 0.7rem; text-align: center; opacity: 0.6; }
 .loader { border: 4px solid rgba(255, 255, 255, 0.2); border-left-color: var(--accent-color); border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: auto; }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -141,23 +145,76 @@ tbody tr.clickable-row:hover { background-color: rgba(0, 229, 255, 0.1); }
 .improbability-message-area p, .improbability-note { font-family: var(--font-family-body); }
 .improbability-message-area p { font-size: 1.1rem; line-height: 1.6; }
 
-/* --- YENİ EKLENEN STİLLER --- */
-.sidebar-wrapper { flex: 2; display: flex; flex-direction: column; gap: 1.5rem; }
-.improbability-message-area { flex-grow: 0; min-height: 80px; }
-#news-content-area img { width: 100%; border-radius: 8px; margin-bottom: 1rem; object-fit: cover; }
-#news-content-area h3 { color: var(--accent-color); margin-bottom: 0.5rem; }
-#news-content-area p { 
-    font-size: 0.9rem; 
-    opacity: 0.9; 
-    margin-bottom: 0.75rem; 
+.sidebar-wrapper {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+#improbability-drive-container {
+    flex-grow: 0;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+#weekly-matchups-card {
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    min-height: 0; 
+}
+
+.full-width-card {
+    width: 100%;
+    margin-top: 1.5rem; 
+}
+
+#news-content-area {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    align-items: start;
+}
+
+#news-content-area > div {
+    display: flex;
+    flex-direction: column;
+}
+
+#news-content-area img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    object-fit: cover;
+}
+
+#news-content-area h3 {
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+#news-content-area p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin-bottom: 0.75rem;
     font-family: var(--font-family-body);
     line-height: 1.6;
+    flex-grow: 1;
 }
-#improbability-drive-container { flex: 1 1 35%; display: flex; flex-direction: column; }
-#weekly-news-card { flex: 2 1 65%; display: flex; flex-direction: column; }
-#news-content-area { flex-grow: 1; }
 
-/* --- AÇILIR PENCERE (MODAL) STİLLERİ --- */
+#weekly-matchups-card {
+    overflow-y: auto;
+}
+
+.matchups-note {
+    font-size: 0.7rem;
+    text-align: center;
+    opacity: 0.6;
+    margin-top: 1rem;
+}
+
 #what-is-it-button { color: #a0d8ff; border: 1px solid rgba(0, 229, 255, 0.4); padding: 0.5rem 0.9rem; border-radius: var(--border-radius); text-align: center; font-size: 0.7rem; line-height: 1.2; font-weight: 700; }
 #what-is-it-button:hover { background-color: var(--accent-color); color: var(--dark-bg); text-shadow: none; box-shadow: 0 0 15px var(--glow-color); }
 nav a#what-is-it-button::after { display: none; }
@@ -171,9 +228,6 @@ nav a#what-is-it-button::after { display: none; }
 .modal-content p, .modal-content li { font-family: var(--font-family-body); line-height: 1.8; margin-bottom: 1rem; }
 .modal-content ul { padding-left: 20px; }
 
-/* =================================================================
-   ==== ŞUBE PROFİL KARTI MODAL STİLLERİ ====
-   ================================================================= */
 .profile-modal-overlay {
     position: fixed;
     top: 0;
@@ -357,7 +411,6 @@ nav a#what-is-it-button::after { display: none; }
     margin-bottom: 0;
 }
 
-/* --- DÜZELTME: Öne Çıkan Haberler'deki SVG görsellerini küçültmek için eklendi --- */
 #news-content-area img[src$=".svg"] {
     width: 40%;
     max-width: 250px;
@@ -366,9 +419,6 @@ nav a#what-is-it-button::after { display: none; }
     margin: 1rem auto;
 }
 
-/* =================================================================
-   ==== KAMPANYA KURGUSU SAYFASI ÖZEL STİLLERİ ====
-   ================================================================= */
 .campaign-slogan {
     text-align: center; 
     font-weight: bold; 
@@ -438,9 +488,6 @@ nav a#what-is-it-button::after { display: none; }
     font-family: var(--font-family-body);
 }
 
-/* =================================================================
-   ==== HESAPLAMA SAYFASI ÖZEL STİLLERİ ====
-   ================================================================= */
 .calculator-layout {
     display: flex;
     gap: 2rem;
@@ -554,9 +601,6 @@ nav a#what-is-it-button::after { display: none; }
     100% { transform: scale(1); }
 }
 
-/* =================================================================
-   ==== HESAPLAMA SAYFASI VE MENÜ GÖRSEL İYİLEŞTİRMELERİ (SON HALİ) ====
-   ================================================================= */
 .nav-button-stacked {
     color: var(--text-color);
     background-color: rgba(0, 229, 255, 0.15);
@@ -600,9 +644,6 @@ nav a#what-is-it-button::after { display: none; }
     text-align: right;
 }
 
-/* =================================================================
-   ==== GENEL MOBİL UYUMLULUK DÜZELTMELERİ (SON VE TAM HALİ) ====
-   ================================================================= */
 @media (max-width: 768px) {
     .container {
         padding: 1rem 15px;
@@ -719,10 +760,6 @@ nav a#what-is-it-button::after { display: none; }
     .stat-card-new-label {
         font-size: 0.7rem;
     }
-
-    /* =========================================================
-       ==== HESAPLAMA ARACI MOBİL UYUMLULUK DÜZELTMELERİ ====
-       ========================================================= */
     .calculator-layout {
         flex-direction: column;
     }
@@ -777,4 +814,162 @@ nav a#what-is-it-button::after { display: none; }
     .bonus-section label {
         font-size: 1rem;
     }
+}
+
+/* --- HAFTANIN KARŞILAŞMALARI - YENİ VE GÖZ ALICI TASARIM --- */
+#weekly-matchups-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem; /* 1rem'den küçültüldü */
+}
+
+.matchup-item {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 0.75rem; /* 1rem'den küçültüldü */
+    padding: 0.75rem; /* 1rem'den küçültüldü */
+    background: rgba(13, 16, 27, 0.6);
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.matchup-item:hover {
+    transform: scale(1.02);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+}
+
+.matchup-team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem; /* 0.75rem'den küçültüldü */
+}
+
+.matchup-team-logo {
+    width: 40px; /* 50px'ten küçültüldü */
+    height: 40px; /* 50px'ten küçültüldü */
+    border-radius: 50%;
+}
+
+.matchup-team-name {
+    font-weight: 700;
+    font-size: 0.9rem; /* 1rem'den küçültüldü */
+    line-height: 1.2;
+}
+
+.matchup-vs-graphic {
+    font-size: 1.2rem; /* 1.5rem'den küçültüldü */
+    font-weight: 900;
+    color: var(--dark-bg);
+    background: var(--accent-color);
+    width: 40px; /* 50px'ten küçültüldü */
+    height: 40px; /* 50px'ten küçültüldü */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+
+.matchup-main-score {
+    font-size: 2.2rem; /* 2.8rem'den küçültüldü */
+    font-weight: 900;
+    color: var(--accent-color);
+    line-height: 1;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+    border: 2px solid transparent;
+}
+
+.matchup-main-score:hover {
+    background-color: var(--accent-color);
+    color: var(--dark-bg);
+    border-color: var(--glow-color);
+}
+
+
+/* --- PUAN DETAYLARI AÇILIR PENCERE (TOOLTIP) STİLİ --- */
+.score-tooltip {
+    position: absolute;
+    z-index: 9999;
+    background-color: #121a2c;
+    border: 1px solid var(--accent-color);
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+    width: 220px;
+    animation: fadeInTooltip 0.3s ease-out;
+}
+
+.score-tooltip h4 {
+    font-family: var(--font-family);
+    color: var(--accent-color);
+    margin: 0 0 0.75rem 0;
+    text-align: center;
+    font-size: 1.1rem;
+    border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+    padding-bottom: 0.5rem;
+}
+
+.score-tooltip ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-family: var(--font-family-body);
+}
+
+.score-tooltip li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.3rem 0;
+    font-size: 0.9rem;
+}
+
+.score-tooltip li span {
+    opacity: 0.8;
+}
+
+@keyframes fadeInTooltip {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* assets/css/style.css - EN SONA EKLENECEK YENİ STİLLER */
+
+/* --- HAFTANIN KARŞILAŞMALARI - YENİ DİKKAT ÇEKİCİ BAŞLIK --- */
+#weekly-matchups-card .card-title {
+    text-align: center;
+    font-size: 1.5rem;
+    background: linear-gradient(90deg, #a0d8ff, #00e5ff, #a0d8ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.5rem;
+    animation: pulse-glow 3s infinite ease-in-out; /* Mevcut animasyonu kullanıyoruz */
+}
+
+/* --- ÖNE ÇIKAN HABERLER BÖLÜMÜNÜN YENİ KONUMU İÇİN STİL --- */
+#bottom-news-section {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 229, 255, 0.2);
+}
+
+/* Eski tam genişlik stilini kaldırıyoruz */
+.full-width-card {
+    display: none;
 }
