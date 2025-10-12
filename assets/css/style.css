@@ -85,7 +85,7 @@ tbody tr.clickable-row:hover { background-color: rgba(0, 229, 255, 0.1); }
 .match-row .team.away { flex-direction: row-reverse; }
 .score-info-fixture { padding: 0.5rem 1.5rem; border-radius: var(--border-radius); background: var(--dark-bg); font-weight: 900; }
 .score-info-fixture .score { color: var(--accent-color); font-size: 1.3rem; }
-.vs-separator-fixture { margin: 0 0.5rem; }
+.score-info-fixture .vs-separator-fixture { margin: 0 0.5rem; }
 
 #improbability-drive-container { 
     display: flex; 
@@ -171,17 +171,13 @@ tbody tr.clickable-row:hover { background-color: rgba(0, 229, 255, 0.1); }
     margin-top: 1.5rem; 
 }
 
+/* === DEĞİŞİKLİK BURADA BAŞLIYOR === */
+/* Eski "grid" düzeni kaldırıldı ve "block" ile değiştirildi. */
 #news-content-area {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    align-items: start;
+    display: block; /* Öğelerin (video ve metin) alt alta dikey olarak sıralanmasını sağlar. */
+    width: 100%; /* Konteynırın tam genişliği kaplamasını sağlar. */
 }
-
-#news-content-area > div {
-    display: flex;
-    flex-direction: column;
-}
+/* === DEĞİŞİKLİK BURADA BİTİYOR === */
 
 #news-content-area img {
     width: 100%;
@@ -972,4 +968,13 @@ nav a#what-is-it-button::after { display: none; }
 /* Eski tam genişlik stilini kaldırıyoruz */
 .full-width-card {
     display: none;
+}
+
+/* === YENİ EKLENEN STİLLER BURADA === */
+.highlight-branch {
+    color: var(--accent-color);
+    font-weight: 700;
+    font-style: italic;
+    text-shadow: 0 0 8px var(--glow-color);
+    transition: all 0.3s ease;
 }

@@ -16,7 +16,7 @@ function displayError(container, message = "Veriler yüklenemedi. Bağlantı Ba�
 }
 
 // =================================================================
-// HAFTALIK HABERLERİ YÜKLEME FONKSİYONU
+// HAFTALIK HABERLERİ YÜKLEME FONKSİYONU (GÜNCELLENDİ)
 // =================================================================
 async function loadWeeklyNews() {
     const newsContainer = document.getElementById('news-content-area');
@@ -27,14 +27,11 @@ async function loadWeeklyNews() {
             const response = await fetch('haberler.html');
             if (!response.ok) throw new Error('Haberler dosyası bulunamadı.');
             const newsHtml = await response.text();
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(newsHtml, 'text/html');
-            let groupedHtml = '';
-            const children = Array.from(doc.body.children);
-            for (let i = 0; i < children.length; i += 3) {
-                groupedHtml += `<div>${children[i].outerHTML}${children[i+1] ? children[i+1].outerHTML : ''}${children[i+2] ? children[i+2].outerHTML : ''}</div>`;
-            }
-            newsContainer.innerHTML = groupedHtml;
+            
+            // DEĞİŞİKLİK: Eski içerik gruplama mantığı kaldırıldı.
+            // Yeni haberler.html içeriği artık doğrudan ve tek parça olarak yükleniyor.
+            newsContainer.innerHTML = newsHtml;
+
         } catch (error) {
             console.error('Haberler yüklenirken hata oluştu:', error);
             displayError(newsContainer, 'Haberler yüklenemedi.');
