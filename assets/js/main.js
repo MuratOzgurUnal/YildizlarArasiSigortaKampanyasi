@@ -47,17 +47,41 @@ async function loadWeeklyNews() {
 // HAFTANIN KARŞILAŞMALARI BÖLÜMÜ (GÜNCELLENDİ)
 // =================================================================
 
+// GÜNCELLENDİ: Haftalık fikstür mantığı güncellendi.
 function getCurrentCampaignWeek() {
     const startDate = new Date('2025-10-06T00:00:00Z');
     const today = new Date();
+
+    // Kampanya başlamadıysa 1. haftayı göster
     if (today < startDate) return 1;
+
     const diffTime = Math.abs(today - startDate);
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     const currentWeek = Math.floor(diffDays / 7) + 1;
-    return currentWeek > 12 ? 12 : currentWeek;
+
+    // JavaScript'te getDay() Pazar için 0, Pazartesi için 1, ..., Cumartesi için 6 döndürür.
+    const isMonday = today.getDay() === 1;
+
+    let weekToShow = currentWeek;
+
+    if (isMonday) {
+        // Pazartesi günleri bir önceki haftanın sonuçlarını göster.
+        weekToShow = currentWeek - 1;
+    }
+
+    // Haftanın 1'den küçük veya 12'den büyük olmamasını sağla.
+    if (weekToShow < 1) {
+        weekToShow = 1;
+    }
+    if (weekToShow > 12) {
+        weekToShow = 12;
+    }
+    
+    return weekToShow;
 }
 
-// Karşılaşmaları HTML olarak formatlayan fonksiyon (YENİ VE İYİLEŞTİRİLMİŞ HALİ)
+
+// GÜNCELLENDİ: Karşılaşmaları formatlayan fonksiyona bonus puan eklendi.
 function formatMatchups(matches, allBranchData) {
     if (!matches || matches.length === 0) {
         return '<p>Bu hafta için karşılaşma bulunamadı.</p>';
@@ -69,9 +93,9 @@ function formatMatchups(matches, allBranchData) {
 
         if (!teamA || !teamB) return ''; // Eğer şube verisi bulunamazsa bu maçı atla
 
-        // Puan detaylarını data attribute olarak saklıyoruz
-        const teamA_details = `data-saglik="${teamA.Saglik || 0}" data-hayat="${teamA.Hayat || 0}" data-elementer="${teamA.Elementer || 0}" data-besciro="${teamA.BESCiro || 0}" data-besadet="${teamA.BESAdet || 0}"`;
-        const teamB_details = `data-saglik="${teamB.Saglik || 0}" data-hayat="${teamB.Hayat || 0}" data-elementer="${teamB.Elementer || 0}" data-besciro="${teamB.BESCiro || 0}" data-besadet="${teamB.BESAdet || 0}"`;
+        // Puan detaylarına "BONUSAdet" verisi eklendi
+        const teamA_details = `data-saglik="${teamA.Saglik || 0}" data-hayat="${teamA.Hayat || 0}" data-elementer="${teamA.Elementer || 0}" data-besciro="${teamA.BESCiro || 0}" data-besadet="${teamA.BESAdet || 0}" data-bonusadet="${teamA.BONUSAdet || 0}"`;
+        const teamB_details = `data-saglik="${teamB.Saglik || 0}" data-hayat="${teamB.Hayat || 0}" data-elementer="${teamB.Elementer || 0}" data-besciro="${teamB.BESCiro || 0}" data-besadet="${teamB.BESAdet || 0}" data-bonusadet="${teamB.BONUSAdet || 0}"`;
 
         return `
             <div class="matchup-item">
@@ -110,11 +134,11 @@ async function loadWeeklyMatchups(container) {
 
         const [fixturesData, allBranchData] = await Promise.all([
             fetchGoogleSheetData('Fikstur!A1:E'),
-            fetchGoogleSheetData('Karsilasmalar!A1:H')
+            fetchGoogleSheetData('Karsilasmalar!A1:H') // Veri aralığı kontrol edildi.
         ]);
         
-        const currentWeek = getCurrentCampaignWeek();
-        const weeklyFixtures = fixturesData.filter(f => parseInt(f.Hafta) === currentWeek);
+        const weekToDisplay = getCurrentCampaignWeek();
+        const weeklyFixtures = fixturesData.filter(f => parseInt(f.Hafta) === weekToDisplay);
 
         const formattedHtml = formatMatchups(weeklyFixtures, allBranchData);
         contentArea.innerHTML = formattedHtml;
@@ -129,7 +153,7 @@ async function loadWeeklyMatchups(container) {
     }
 }
 
-// YENİ: Puan detayları penceresini yöneten fonksiyonlar
+// GÜNCELLENDİ: Puan detayları penceresine "Bireysel Bonus" alanı eklendi
 function attachScoreTooltipListener() {
     document.querySelectorAll('.clickable-score').forEach(scoreElement => {
         scoreElement.addEventListener('click', (event) => {
@@ -153,6 +177,7 @@ function attachScoreTooltipListener() {
                     <li><span>Elementer:</span> <strong>${details.elementer}</strong></li>
                     <li><span>BES Ciro:</span> <strong>${details.besciro}</strong></li>
                     <li><span>BES Adet:</span> <strong>${details.besadet}</strong></li>
+                    <li><span>Bireysel Bonus:</span> <strong>${details.bonusadet}</strong></li>
                 </ul>
             `;
             document.body.appendChild(tooltip);
