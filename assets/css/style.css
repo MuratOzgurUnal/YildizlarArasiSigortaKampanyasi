@@ -978,3 +978,91 @@ nav a#what-is-it-button::after { display: none; }
     text-shadow: 0 0 8px var(--glow-color);
     transition: all 0.3s ease;
 }
+
+/* assets/css/style.css - EN SONA EKLENECEK YENİ STİLLER */
+
+.week-date-range {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    opacity: 0.7;
+    font-weight: normal;
+    margin-left: 0.5rem;
+}
+
+.bonus-icon {
+    display: inline-block;
+    margin-left: 5px;
+    font-size: 1rem;
+    cursor: help;
+    vertical-align: middle;
+}
+
+.match-row-wrapper .match-week-info .week-date-range {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+.score-breakdown {
+    background-color: rgba(13, 16, 27, 0.8);
+    border-radius: var(--border-radius);
+    padding: 0.75rem 1rem;
+    margin-top: 0.75rem;
+    border: 1px solid rgba(0, 229, 255, 0.15);
+}
+
+.score-breakdown p {
+    margin: 0 0 0.5rem 0;
+    font-family: var(--font-family);
+    color: var(--accent-color);
+    text-align: center;
+}
+
+.score-breakdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1rem;
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
+.stats-grid-new {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.chart-and-legend {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* assets/css/style.css - ORİJİNAL TASARIM VE YENİ BONUS BÖLÜMÜ İÇİN EKLENECEK STİLLER */
+
+.stats-grid-new.original-layout {
+    grid-template-columns: repeat(2, 1fr); /* 2 sütunlu yapı */
+    grid-template-rows: auto auto auto; /* 3 satırlı yapı */
+    gap: 1rem;
+}
+
+.performance-legend {
+    margin-top: 1.5rem; /* Grafikle arasında boşluk bırak */
+}
+
+.bonus-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.bonus-item {
+    background-color: rgba(0, 229, 255, 0.1);
+    color: var(--accent-color);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
