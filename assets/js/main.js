@@ -1,4 +1,4 @@
-// assets/js/main.js - BONUSLARA HAFTA BİLGİSİ EKLENMİŞ NİHAİ SÜRÜM
+// assets/js/main.js - SAAT DİLİMİ (TIMEZONE) SORUNU GİDERİLMİŞ NİHAİ VERSİYON
 
 import { fetchGoogleSheetData, fetchGeminiData } from './api.js';
 
@@ -33,21 +33,49 @@ async function loadWeeklyNews() {
 }
 
 // =================================================================
-// HAFTANIN KARŞILAŞMALARI BÖLÜMÜ
+// HAFTANIN KARŞILAŞMALARI BÖLÜMÜ - KESİN ÇÖZÜM
 // =================================================================
 function getCurrentCampaignWeek() {
-    const startDate = new Date('2025-10-06T00:00:00Z');
+    // --- SAAT DİLİMİ SORUNUNU GİDEREN YENİ MANTIK ---
+    
+    // 1. Tüm tarihleri evrensel saat dilimine (UTC) göre tanımlıyoruz.
+    const startDate = new Date(Date.UTC(2025, 9, 6)); // 6 Ekim 2025 (aylar 0'dan başlar, 9=Ekim)
     const today = new Date();
-    if (today < startDate) return 1;
-    const diffTime = Math.abs(today - startDate);
+    const todayUTC = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
+
+    // 2. Kampanya başlamadıysa 1. haftayı göster.
+    if (todayUTC < startDate) {
+        return 1;
+    }
+
+    // 3. İki UTC tarihi arasındaki farkı milisaniye olarak alıyoruz.
+    const diffTime = todayUTC - startDate;
+    
+    // 4. Farkı gün sayısına çeviriyoruz.
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    const currentWeek = Math.floor(diffDays / 7) + 1;
-    let weekToShow = currentWeek;
-    if (today.getDay() === 1) { weekToShow = currentWeek - 1; }
+    
+    // 5. Geçen gün sayısına göre hangi takvim haftasında olduğumuzu buluyoruz.
+    const currentCalendarWeek = Math.floor(diffDays / 7) + 1;
+
+    // 6. Bugünün gününü UTC'ye göre alıyoruz (Pazar=0, Pazartesi=1, ...)
+    const dayOfWeek = today.getUTCDay();
+    
+    let weekToShow;
+
+    // 7. KURAL: Pazartesi günleri bir önceki haftayı, diğer günler mevcut haftayı göster.
+    if (dayOfWeek === 1) { // Eğer bugün Pazartesi ise
+        weekToShow = currentCalendarWeek - 1;
+    } else { // Salı, Çarşamba, Perşembe, Cuma, Cumartesi, Pazar
+        weekToShow = currentCalendarWeek;
+    }
+
+    // 8. Güvenlik kontrolleri
     if (weekToShow < 1) weekToShow = 1;
     if (weekToShow > 12) weekToShow = 12;
+
     return weekToShow;
 }
+
 
 function formatMatchups(matches, allBranchData) {
     return matches.filter(match => match && match.EvSahibi && match.Deplasman).map(match => {
@@ -74,6 +102,7 @@ async function loadWeeklyMatchups(container) {
         const validFixtures = fixturesData.filter(f => f && f.Hafta);
         const validBranchData = allBranchData.filter(b => b && b.SubeAdi);
         const weekToDisplay = getCurrentCampaignWeek();
+        
         const weeklyFixtures = validFixtures.filter(f => parseInt(f.Hafta) === weekToDisplay);
         contentArea.innerHTML = formatMatchups(weeklyFixtures, validBranchData) || '<p>Bu hafta için karşılaşma bulunamadı.</p>';
         attachScoreTooltipListener();
@@ -153,7 +182,7 @@ function renderAllFixtures(data, weekDates) {
 }
 
 // =================================================================
-// ŞUBE PROFİL KARTI MODAL FONKSİYONLARI (HAFTA BİLGİSİ EKLENDİ)
+// ŞUBE PROFİL KARTI MODAL FONKSİYONLARI
 // =================================================================
 async function showBranchProfileModal(branchName) {
     const modalOverlay = document.createElement('div');
@@ -185,9 +214,8 @@ async function showBranchProfileModal(branchName) {
             return;
         }
 
-        // --- DEĞİŞİKLİK BURADA BAŞLIYOR ---
         let bonusPuan = 0;
-        const bonuslar = []; // Artık sadece branş değil, obje tutacağız: { brans: 'BES Ciro', hafta: '1' }
+        const bonuslar = []; 
         validFixtures.forEach(match => {
             if ((match.EvSahibiBonus || '').trim() === branchName) {
                 bonusPuan += 3;
@@ -202,7 +230,6 @@ async function showBranchProfileModal(branchName) {
                 }
             }
         });
-        // --- DEĞİŞİKLİK BURADA BİTİYOR ---
         
         const galibiyet = parseInt(branchData.Galibiyet || 0);
         const beraberlik = parseInt(branchData.Beraberlik || 0);
@@ -236,13 +263,11 @@ async function showBranchProfileModal(branchName) {
             return `<div class="match-row-wrapper"><p class="match-week-info">Hafta ${match.Hafta} (${dateRange})</p><div class="match-row"><span class="team home"><img src="${getLogoUrl(match.EvSahibi)}" class="branch-logo"><span>${match.EvSahibi}</span></span><div class="score-info-fixture"><span class="score">${match.EvSahibiSkor}</span>:<span class="score">${match.DeplasmanSkor}</span></div><span class="team away"><span>${match.Deplasman}</span><img src="${getLogoUrl(match.Deplasman)}" class="branch-logo"></span></div></div>`
         }).join('')}</div>` : '<p>Henüz oynanmış maç bulunmuyor.</p>';
 
-        // --- DEĞİŞİKLİK BURADA BAŞLIYOR ---
         const bonusHtml = bonuslar.length > 0 
             ? `<h3 class="profile-section-title">KAZANILAN BONUSLAR</h3><div class="bonus-list">${bonuslar.map(bonus => 
                 `<span class="bonus-item">${bonus.brans} (Hafta ${bonus.hafta})</span>`
               ).join('')}</div>` 
             : '';
-        // --- DEĞİŞİKLİK BURADA BİTİYOR ---
 
         modalBody.innerHTML = topLayoutHtml + fixturesHtml + bonusHtml;
         new Chart(document.getElementById('matchResultChart').getContext('2d'), { type: 'doughnut', data: { labels: ['Galibiyet', 'Beraberlik', 'Mağlubiyet'], datasets: [{ data: [galibiyet, beraberlik, maglubiyet], backgroundColor: ['#28a745', '#6c757d', '#dc3545'], borderColor: 'rgba(26, 34, 56, 0.8)', borderWidth: 3 }] }, options: { responsive: true, cutout: '70%', plugins: { legend: { display: false } } } });
@@ -296,9 +321,9 @@ function initFiksturPage() {
 }
 
 // =================================================================
-// SONSUZ İHTİMALSİZLİK MOTORU VE MODAL MANTIĞI (ORİJİNAL HALİYLE)
+// SONSUZ İHTİMALSİZLİK MOTORU VE MODAL MANTIĞI
 // =================================================================
-const improbabilityButton = document.getElementById('improbability-button'); if (improbabilityButton) { improbabilityButton.addEventListener('click', async () => { const userName = prompt("Lütfen motorun analiz etmesi için bir İsim Soyisim girin:"); if (!userName || userName.trim() === "") { alert("İsim Soyisim girmek zorunludur."); return; } const responseArea = document.getElementById('improbability-response'); responseArea.innerHTML = '<div class="loader"></div><p>İhtimaller hesaplanıyor...</p>'; improbabilityButton.disabled = true; const promptText = `YAPAY ZEKA ROLÜ: Sen, Douglas Adams'ın "Otostopçunun Galaksi Rehberi" tarzında yazan, esprili ve absürt bir yapay zekasın. Görevin, verilen bir isim için, birbiriyle alakasız olayları ve sıradan nesneleri birleştirerek, o kişi hakkında inanılmaz derecede ihtimal dışı ama GERÇEKCİ, komik ve övgü dolu bir "gerçek" senaryo üretmektir. KURALLAR: 1. Dilin basit, komik ve herkesin anlayacağı türden olsun. 2. Her senaryo mutlaka üç temel unsuru birleştirmeli: a) Antalya'ya özgü bir şey b) Bir sigorta veya bankacılık ürünü c) Bu ikisinin birleşimiyle ortaya çıkan absürt bir sonuç. 3. Her seferinde tamamen farklı bir bağlantı kur. Maksimum eğlence ve saçmalık hedefin olsun. 4. Sonuç, kişiyi veya şubesini komik bir şekilde övmeli. 5. Sadece ürettiğin senaryoyu yaz. ÖRNEK SENARYO: "Yapılan son 'nem ölçer' analizlerine göre, [İSİM]'in müşterisine 'Yuvam Sigortası' poliçesini anlatırken sergilediği sıcak ve samimi tavır, odadaki nem oranını %3 düşürmüştür. Bu durum, Antalya'daki genel 'yapış yapış hissetme' katsayısını anlık olarak iyileştirdiği için kendisine belediye tarafından gizli bir 'İklim Düzenleme Kahramanı' madalyası takılmıştır." GÖREV: Aşağıdaki isim için bu kurallara uygun bir senaryo üret. İSİM: ${userName}`; try { const result = await fetchGeminiData(promptText); responseArea.innerHTML = `<p>"${result.trim()}"</p>`; } catch (error) { console.error("Gemini Hatası Detayı:", error); responseArea.innerHTML = `<p class="error-message">İhtimaller, bir fincan çayın aniden varoluştan silinmesiyle sonuçlandı.</p>`; } finally { improbabilityButton.disabled = false; } }); }
+const improbabilityButton = document.getElementById('improbability-button'); if (improbabilityButton) { improbabilityButton.addEventListener('click', async () => { const userName = prompt("Lütfen motorun analiz etmesi için bir İsim Soyisim girin:"); if (!userName || userName.trim() === "") { alert("İsim Soyisim girmek zorunudur."); return; } const responseArea = document.getElementById('improbability-response'); responseArea.innerHTML = '<div class="loader"></div><p>İhtimaller hesaplanıyor...</p>'; improbabilityButton.disabled = true; const promptText = `YAPAY ZEKA ROLÜ: Sen, Douglas Adams'ın "Otostopçunun Galaksi Rehberi" tarzında yazan, esprili ve absürt bir yapay zekasın. Görevin, verilen bir isim için, birbiriyle alakasız olayları ve sıradan nesneleri birleştirerek, o kişi hakkında inanılmaz derecede ihtimal dışı ama GERÇEKCİ, komik ve övgü dolu bir "gerçek" senaryo üretmektir. KURALLAR: 1. Dilin basit, komik ve herkesin anlayacağı türden olsun. 2. Her senaryo mutlaka üç temel unsuru birleştirmeli: a) Antalya'ya özgü bir şey b) Bir sigorta veya bankacılık ürünü c) Bu ikisinin birleşimiyle ortaya çıkan absürt bir sonuç. 3. Her seferinde tamamen farklı bir bağlantı kur. Maksimum eğlence ve saçmalık hedefin olsun. 4. Sonuç, kişiyi veya şubesini komik bir şekilde övmeli. 5. Sadece ürettiğin senaryoyu yaz. ÖRNEK SENARYO: "Yapılan son 'nem ölçer' analizlerine göre, [İSİM]'in müşterisine 'Yuvam Sigortası' poliçesini anlatırken sergilediği sıcak ve samimi tavır, odadaki nem oranını %3 düşürmüştür. Bu durum, Antalya'daki genel 'yapış yapış hissetme' katsayısını anlık olarak iyileştirdiği için kendisine belediye tarafından gizli bir 'İklim Düzenleme Kahramanı' madalyası takılmıştır." GÖREV: Aşağıdaki isim için bu kurallara uygun bir senaryo üret. İSİM: ${userName}`; try { const result = await fetchGeminiData(promptText); responseArea.innerHTML = `<p>"${result.trim()}"</p>`; } catch (error) { console.error("Gemini Hatası Detayı:", error); responseArea.innerHTML = `<p class="error-message">İhtimaller, bir fincan çayın aniden varoluştan silinmesiyle sonuçlandı.</p>`; } finally { improbabilityButton.disabled = false; } }); }
 let isModalContentLoaded = false;
 function initModal() { const modal = document.getElementById('improbability-modal'); const openBtn = document.getElementById('what-is-it-button'); const closeBtn = document.querySelector('.modal-close-button'); const modalBody = document.getElementById('modal-body-content'); if (!modal || !openBtn || !closeBtn || !modalBody) return; async function loadModalContent() { if (isModalContentLoaded) return; modalBody.innerHTML = '<div class="loader"></div>'; try { const response = await fetch('ihtimalsizlik-nedir.html'); if (!response.ok) throw new Error('İçerik dosyası bulunamadı.'); modalBody.innerHTML = await response.text(); isModalContentLoaded = true; } catch (error) { console.error("Modal içeriği yüklenirken hata:", error); modalBody.innerHTML = '<p class="error-message">Açıklama içeriği yüklenirken bir sorun oluştu.</p>'; } } openBtn.addEventListener('click', async (e) => { e.preventDefault(); modal.classList.add('modal-visible'); await loadModalContent(); }); closeBtn.addEventListener('click', () => { modal.classList.remove('modal-visible'); }); modal.addEventListener('click', (e) => { if (e.target === modal) { modal.classList.remove('modal-visible'); } }); }
 
