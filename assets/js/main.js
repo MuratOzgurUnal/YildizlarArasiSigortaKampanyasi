@@ -215,18 +215,34 @@ async function showBranchProfileModal(branchName) {
         }
 
         let bonusPuan = 0;
-        const bonuslar = []; 
+        const bonuslar = [];
         validFixtures.forEach(match => {
-            if ((match.EvSahibiBonus || '').trim() === branchName) {
-                bonusPuan += 3;
-                if (match.EvSahibiBrans) {
-                    bonuslar.push({ brans: match.EvSahibiBrans, hafta: match.Hafta });
+            // Ev sahibi takım bonusunu kontrol et
+            if (match.EvSahibi === branchName) {
+                const puan = parseInt(match.EvSahibiBonus, 10);
+                if (!isNaN(puan) && puan > 0) {
+                    bonusPuan += puan;
+                    if (match.EvSahibiBrans) {
+                        bonuslar.push({
+                            hafta: match.Hafta,
+                            brans: match.EvSahibiBrans,
+                            puan: puan
+                        });
+                    }
                 }
             }
-            if ((match.DeplasmanBonus || '').trim() === branchName) {
-                bonusPuan += 3;
-                if (match.DeplasmanBrans) {
-                    bonuslar.push({ brans: match.DeplasmanBrans, hafta: match.Hafta });
+            // Deplasman takım bonusunu kontrol et
+            if (match.Deplasman === branchName) {
+                const puan = parseInt(match.DeplasmanBonus, 10);
+                if (!isNaN(puan) && puan > 0) {
+                    bonusPuan += puan;
+                    if (match.DeplasmanBrans) {
+                        bonuslar.push({
+                            hafta: match.Hafta,
+                            brans: match.DeplasmanBrans,
+                            puan: puan
+                        });
+                    }
                 }
             }
         });
@@ -263,10 +279,14 @@ async function showBranchProfileModal(branchName) {
             return `<div class="match-row-wrapper"><p class="match-week-info">Hafta ${match.Hafta} (${dateRange})</p><div class="match-row"><span class="team home"><img src="${getLogoUrl(match.EvSahibi)}" class="branch-logo"><span>${match.EvSahibi}</span></span><div class="score-info-fixture"><span class="score">${match.EvSahibiSkor}</span>:<span class="score">${match.DeplasmanSkor}</span></div><span class="team away"><span>${match.Deplasman}</span><img src="${getLogoUrl(match.Deplasman)}" class="branch-logo"></span></div></div>`
         }).join('')}</div>` : '<p>Henüz oynanmış maç bulunmuyor.</p>';
 
-        const bonusHtml = bonuslar.length > 0 
-            ? `<h3 class="profile-section-title">KAZANILAN BONUSLAR</h3><div class="bonus-list">${bonuslar.map(bonus => 
-                `<span class="bonus-item">${bonus.brans} (Hafta ${bonus.hafta})</span>`
-              ).join('')}</div>` 
+        const bonusHtml = bonuslar.length > 0
+            ? `<h3 class="profile-section-title">KAZANILAN BONUSLAR</h3><div class="bonus-list">${bonuslar.map(bonus =>
+                `<div class="bonus-item">
+                    <span class="bonus-branch">${bonus.brans}</span>
+                    <span class="bonus-points">+${bonus.puan} Puan</span>
+                    <span class="bonus-week">Hafta ${bonus.hafta}</span>
+                 </div>`
+              ).join('')}</div>`
             : '';
 
         modalBody.innerHTML = topLayoutHtml + fixturesHtml + bonusHtml;

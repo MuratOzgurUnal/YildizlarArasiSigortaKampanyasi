@@ -10,9 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const branches = [
         { id: 'saglik', name: 'Sağlık', basePoint: 20 },
         { id: 'elementer', name: 'Elementer', basePoint: 20 },
-        { id: 'hayat', name: 'Hayat', basePoint: 10 },
+        { id: 'hayat', name: 'Hayat', basePoint: 30 },
         { id: 'bes-hacim', name: 'BES Hacim', basePoint: 20 },
-        { id: 'bes-adet', name: 'BES Adet', basePoint: 30 }
+        { id: 'bes-adet', name: 'BES Adet', basePoint: 10 }
     ];
 
     // Sayıları binlik ayraçla formatlayan fonksiyon

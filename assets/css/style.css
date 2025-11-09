@@ -1066,3 +1066,60 @@ nav a#what-is-it-button::after { display: none; }
     font-size: 0.8rem;
     font-weight: 700;
 }
+
+/* assets/css/style.css - KAZANILAN BONUSLAR BÖLÜMÜ İÇİN YENİ STİLLER */
+
+.bonus-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive grid */
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.bonus-item {
+    background-color: rgba(0, 229, 255, 0.08);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.bonus-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
+    border-color: var(--accent-color);
+}
+
+.bonus-branch {
+    font-family: var(--font-family);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
+
+.bonus-points {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--accent-color);
+    text-shadow: 0 0 10px var(--glow-color);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+}
+
+.bonus-week {
+    font-size: 0.8rem;
+    font-family: var(--font-family-body);
+    opacity: 0.7;
+}
+
+/* For mobile, make it a single column */
+@media (max-width: 768px) {
+    .bonus-list {
+        grid-template-columns: 1fr;
+    }
+}
