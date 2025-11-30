@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             let basePoint = branch.basePoint;
             if (branch.id === 'bes-adet' && sinerjiBonusuCheckbox.checked) {
-                basePoint = 40;
+                basePoint = 20;
             }
 
             if (hedef > 0) {
