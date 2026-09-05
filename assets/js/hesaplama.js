@@ -1,33 +1,29 @@
-// assets/js/hesaplama.js - TÜM İSTEKLERİ İÇEREN SON GÜNCEL HALİ
+// assets/js/hesaplama.js - %50 ALT SINIR (KESİN ÇÖZÜM)
 
 document.addEventListener('DOMContentLoaded', () => {
     const calculatorBody = document.getElementById('calculator-body');
     const calculateButton = document.getElementById('calculate-button');
     const resetButton = document.getElementById('reset-button');
-    const sinerjiBonusuCheckbox = document.getElementById('sinerji-bonusu');
     const totalScoreDisplay = document.getElementById('total-score-display');
 
     const branches = [
-        { id: 'saglik', name: 'Sağlık', basePoint: 20 },
-        { id: 'elementer', name: 'Elementer', basePoint: 20 },
-        { id: 'hayat', name: 'Hayat', basePoint: 30 },
-        { id: 'bes-hacim', name: 'BES Hacim', basePoint: 20 },
+        { id: 'saglik', name: 'Sağlık', basePoint: 25 },
+        { id: 'elementer', name: 'Elementer', basePoint: 25 },
+        { id: 'hayat', name: 'Hayat', basePoint: 15 },
+        { id: 'bes-hacim', name: 'BES Hacim', basePoint: 25 },
         { id: 'bes-adet', name: 'BES Adet', basePoint: 10 }
     ];
 
-    // Sayıları binlik ayraçla formatlayan fonksiyon
     function formatNumber(value) {
         if (!value) return '';
         const numberString = value.toString().replace(/\./g, '');
         return numberString.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     }
 
-    // Formatlanmış sayıdan normal sayıya dönen fonksiyon
     function parseNumber(value) {
         return parseFloat(value.replace(/\./g, '')) || 0;
     }
     
-    // Tabloyu Dinamik Olarak Oluştur
     function renderTable() {
         let html = '';
         branches.forEach(branch => {
@@ -42,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         calculatorBody.innerHTML = html;
 
-        // Input'lara anlık formatlama event listener'ı ekle
         document.querySelectorAll('.calc-input').forEach(input => {
             input.addEventListener('input', (e) => {
                 const selectionStart = e.target.selectionStart;
@@ -54,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Puan Hesaplama Fonksiyonu
     function calculateScore() {
         let totalScore = 0;
 
@@ -67,16 +61,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const gerceklesen = parseNumber(gerceklesenInput.value);
             
             let branchScore = 0;
-            
             let basePoint = branch.basePoint;
-            if (branch.id === 'bes-adet' && sinerjiBonusuCheckbox.checked) {
-                basePoint = 20;
-            }
 
             if (hedef > 0) {
                 let ratio = gerceklesen / hedef;
 
-                if (ratio >= 0.60) {
+                // TAM OLARAK BURASI: Alt sınır %50'ye (0.50) ayarlandı.
+                // Eğer gerçekleşen/hedef oranı 0.50 veya daha fazlaysa puan hesaplanır.
+                if (ratio >= 0.50) {
                     if (ratio > 2.0) {
                         ratio = 2.0;
                     }
@@ -93,13 +85,11 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => totalScoreDisplay.classList.remove('pulse'), 500);
     }
 
-    // Formu Sıfırlama Fonksiyonu
     function resetCalculator() {
         document.querySelectorAll('.calc-input').forEach(input => input.value = '');
         branches.forEach(branch => {
             document.getElementById(`${branch.id}-puan`).textContent = '0.00';
         });
-        sinerjiBonusuCheckbox.checked = false;
         totalScoreDisplay.textContent = '0';
     }
 

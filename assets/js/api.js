@@ -1,85 +1,66 @@
-// assets/js/api.js
+// assets/js/api.js - GEMINI 3.5 FLASH LITE VERSİYONU
 
-// =================================================================
-// API ANAHTARLARI VE YAPILANDIRMA
-// =================================================================
+// 1. Google Sheets Anahtarı
+const GOOGLE_API_KEY = 'AIzaSyBVYEiJeU9ZtWW7VHvDgXnKJJx0dhhd2oM'; 
 
-// Önce anahtarları sunucudan güvenli bir şekilde çekmek için bir fonksiyon yazıyoruz.
-async function getApiKeys() {
-    try {
-        // Vercel'de oluşturduğumuz sunucusuz fonksiyona istek atıyoruz.
-        const response = await fetch('/api/config');
-        if (!response.ok) {
-            throw new Error('API anahtarları alınamadı.');
-        }
-        return await response.json();
-    } catch (error) {
-        console.error('API anahtarları yüklenirken hata:', error);
-        // Anahtarlar yüklenemezse null döndürerek diğer fonksiyonların hata vermesini sağlıyoruz.
-        return null; 
-    }
-}
+// 2. Gemini Anahtarı (Buraya kendi anahtarını yapıştır)
+const GEMINI_API_KEY = 'AIzaSyBixdZvEPcDKZ5rjOMxFva1fIUxRdApQ_0'; 
 
-// GOOGLE SHEETS DOKÜMAN ID'NİZİ BURAYA GİRİN.
-const SPREADSHEET_ID = '1Y-3f2a3x6rySezzKJeFmddC-_bL7sHX_riRvv0LPiU8';
+const SPREADSHEET_ID = '1NM4J06fa6Y-WEHGhKCSj3UaoeEU0kzH56_FxHYQwOJQ';
 
-// =================================================================
-// GOOGLE SHEETS VERİ ÇEKME FONKSİYONU
-// =================================================================
 export async function fetchGoogleSheetData(sheetName) {
-    const keys = await getApiKeys();
-    if (!keys) throw new Error("API anahtarları eksik.");
-
     const GOOGLE_SHEETS_BASE_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/`;
-    const url = `${GOOGLE_SHEETS_BASE_URL}${sheetName}?key=${keys.googleApiKey}`;
+    const url = `${GOOGLE_SHEETS_BASE_URL}${encodeURIComponent(sheetName)}?key=${GOOGLE_API_KEY}`;
     
     try {
         const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`Google Sheets API Hatası: ${response.status}`);
-        }
-        const data = await response.json();
-        const headers = data.values[0];
-        const rows = data.values.slice(1);
+        if (!response.ok) throw new Error("Sayfa bulunamadı veya API erişim izni yok.");
+        
+        const sheetVerisi = await response.json();
+        
+        if (!sheetVerisi.values || sheetVerisi.values.length === 0) return [];
+        const headers = sheetVerisi.values[0].map(header => header.trim());
+        const rows = sheetVerisi.values.slice(1);
         
         return rows.map(row => {
             const rowData = {};
             headers.forEach((header, index) => {
-                rowData[header] = row[index];
+                rowData[header] = row[index] ? row[index].trim() : '';
             });
             return rowData;
         });
     } catch (error) {
-        console.error('Google Sheets verisi çekilirken hata:', error);
+        console.error("Google verisi çekilirken hata:", error);
         throw error;
     }
 }
 
-// =================================================================
-// GOOGLE GEMINI VERİ ÇEKME FONKSİYONU
-// =================================================================
 export async function fetchGeminiData(prompt) {
-    const keys = await getApiKeys();
-    if (!keys) throw new Error("API anahtarları eksik.");
-    
-    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=${keys.geminiApiKey}`;
+    if (!GEMINI_API_KEY || !GEMINI_API_KEY.startsWith('AIza')) {
+        console.warn("Geçerli bir Gemini API anahtarı bulunamadı.");
+        return "Motor şu an yakıtsız kaldı. Lütfen api.js dosyasına geçerli bir Gemini API anahtarı ekleyin.";
+    }
 
+    // GÜNCELLEME: Senin seçtiğin 'gemini-3.5-flash-lite' modeli eklendi
+    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=${GEMINI_API_KEY}`;
+    
     try {
         const response = await fetch(GEMINI_API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{ parts: [{ text: prompt }] }]
-            })
+            body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
         });
-
+        
         if (!response.ok) {
-            throw new Error(`Gemini API Hatası: ${response.status}`);
+            const errorData = await response.json();
+            console.error("Gemini API Detaylı Hata Raporu:", errorData);
+            throw new Error(`Gemini API Hatası: ${errorData.error?.message || 'Bilinmeyen hata'}`);
         }
-        const data = await response.json();
-        return data.candidates[0].content.parts[0].text;
+        
+        const aiVerisi = await response.json();
+        return aiVerisi.candidates[0].content.parts[0].text;
     } catch (error) {
-        console.error('Gemini verisi çekilirken hata:', error);
+        console.error("Gemini motoru çalışırken bir sorunla karşılaştı:", error);
         throw error;
     }
 }
