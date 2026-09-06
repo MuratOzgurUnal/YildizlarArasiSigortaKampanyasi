@@ -1,18 +1,21 @@
-// assets/js/api.js - GEMINI 3.5 FLASH LITE VERSİYONU
-
-// 1. Google Sheets Anahtarı
-const GOOGLE_API_KEY = 'AIzaSyBVYEiJeU9ZtWW7VHvDgXnKJJx0dhhd2oM'; 
-
-// 2. Gemini Anahtarı (Buraya kendi anahtarını yapıştır)
-const GEMINI_API_KEY = 'AIzaSyBixdZvEPcDKZ5rjOMxFva1fIUxRdApQ_0'; 
+// assets/js/api.js - %100 GİZLİ VERCEL VERSİYONU
 
 const SPREADSHEET_ID = '1NM4J06fa6Y-WEHGhKCSj3UaoeEU0kzH56_FxHYQwOJQ';
 
+// 1. Google Sheets Veri Çekme Fonksiyonu
 export async function fetchGoogleSheetData(sheetName) {
-    const GOOGLE_SHEETS_BASE_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/`;
-    const url = `${GOOGLE_SHEETS_BASE_URL}${encodeURIComponent(sheetName)}?key=${GOOGLE_API_KEY}`;
-    
     try {
+        // Vercel kasasından Google şifresini çekiyoruz
+        const configResponse = await fetch('/api/config');
+        const configData = await configResponse.json();
+
+        if (!configData.googleApiKey) {
+            throw new Error("Google API anahtarı Vercel kasasında bulunamadı.");
+        }
+
+        const GOOGLE_SHEETS_BASE_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/`;
+        const url = `${GOOGLE_SHEETS_BASE_URL}${encodeURIComponent(sheetName)}?key=${configData.googleApiKey}`;
+        
         const response = await fetch(url);
         if (!response.ok) throw new Error("Sayfa bulunamadı veya API erişim izni yok.");
         
@@ -35,16 +38,19 @@ export async function fetchGoogleSheetData(sheetName) {
     }
 }
 
+// 2. İhtimalsizlik Motoru (Gemini) Veri Çekme Fonksiyonu
 export async function fetchGeminiData(prompt) {
-    if (!GEMINI_API_KEY || !GEMINI_API_KEY.startsWith('AIza')) {
-        console.warn("Geçerli bir Gemini API anahtarı bulunamadı.");
-        return "Motor şu an yakıtsız kaldı. Lütfen api.js dosyasına geçerli bir Gemini API anahtarı ekleyin.";
-    }
-
-    // GÜNCELLEME: Senin seçtiğin 'gemini-3.5-flash-lite' modeli eklendi
-    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=${GEMINI_API_KEY}`;
-    
     try {
+        // Vercel kasasından Gemini şifresini çekiyoruz
+        const configResponse = await fetch('/api/config');
+        const configData = await configResponse.json();
+
+        if (!configData.geminiApiKey) {
+            return "Motor şu an yakıtsız kaldı. Vercel kasasına ulaşılamıyor.";
+        }
+
+        const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=${configData.geminiApiKey}`;
+        
         const response = await fetch(GEMINI_API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -53,14 +59,14 @@ export async function fetchGeminiData(prompt) {
         
         if (!response.ok) {
             const errorData = await response.json();
-            console.error("Gemini API Detaylı Hata Raporu:", errorData);
-            throw new Error(`Gemini API Hatası: ${errorData.error?.message || 'Bilinmeyen hata'}`);
+            throw new Error(`API Hatası: ${errorData.error?.message || 'Bilinmeyen hata'}`);
         }
         
-        const aiVerisi = await response.json();
-        return aiVerisi.candidates[0].content.parts[0].text;
+        const data = await response.json();
+        return data.candidates[0].content.parts[0].text;
+        
     } catch (error) {
-        console.error("Gemini motoru çalışırken bir sorunla karşılaştı:", error);
+        console.error("İhtimalsizlik Motoru çalışırken bir sorunla karşılaştı:", error);
         throw error;
     }
 }
